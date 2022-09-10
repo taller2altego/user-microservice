@@ -8,5 +8,19 @@
   },
   "logging": {
     "level": "debug"
+  },
+  "errors": {
+    "userNotFound": {
+      "statusCode": 404,
+      "message": "No se pudo encontrar el usuario solicitado."
+    },
+    "userAlreadyExists": {
+      "statusCode": 403,
+      "message": "El usuario ya existe."
+    },
+    "missingCredentials": {
+      "statusCode": 401,
+      "message": "Todos los campos indicados con * son requeridos."
+    }
   }
 }

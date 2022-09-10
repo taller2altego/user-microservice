@@ -1,20 +1,20 @@
 const UserService = require('../service/UserService');
 
 class UserController {
-  async signUp(req, res, next) {
+  signUp(req, res, next) {
     return UserService.signUp(req.body)
-      .then(({ token }) => {
+      .then(() => {
         res.customResponse = { statusCode: 201 };
         next();
+      })
+      .catch((err) => {
+        if (err.statusCode === undefined) {
+          res.customResponse = { statusCode: 500, message: 'Unexpected Error'};
+        } else {
+          res.customResponse = { statusCode: err.statusCode, message: err.message};
+        }
+        next();
       });
-    // .catch((err) => {
-    //   if (err.statusCode === undefined) {
-    //     res.customResponse = { statusCode: 500, message: 'Unexpected error' };
-    //   } else {
-    //     res.customResponse = { statusCode: err.statusCode, message: err.message };
-    //   }
-    //   next();
-    // });
   }
 
   async findAllUsers(req, res, next) {
@@ -32,6 +32,15 @@ class UserController {
         console.log(user);
         res.customResponse = { statusCode: 200, data: user };
         next();
+      })
+      .catch((err) => {
+        console.log(err);
+        if (err.statusCode === undefined) {
+          res.customResponse = { statusCode: 500, message: 'Unexpected Error' };
+        } else {
+          res.customResponse = { statusCode: err.statusCode, message: err.message };
+        }
+        next();
       });
   }
 
@@ -40,6 +49,14 @@ class UserController {
       .then(() => {
         res.customResponse = { statusCode: 201 };
         next();
+      })
+      .catch((err) => {
+        if (err.statusCode === undefined) {
+          res.customResponse = { statusCode: 500, message: 'Unexpected Error'};
+        } else {
+          res.customResponse = { statusCode: err.statusCode, message: err.message};
+        }
+        next();
       });
   }
 
@@ -47,6 +64,14 @@ class UserController {
     return UserService.removeUserById(req.params.id)
       .then(() => {
         res.customResponse = { statusCode: 204 };
+        next();
+      })
+      .catch((err) => {
+        if (err.statusCode === undefined) {
+          res.customResponse = { statusCode: 500, message: 'Unexpected Error'};
+        } else {
+          res.customResponse = { statusCode: err.statusCode, message: err.message};
+        }
         next();
       });
   }
