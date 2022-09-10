@@ -1,8 +1,24 @@
 const UserRepository = require('../repository/UserRepository');
 
 class UserService {
-  async signUp(username, password) {
-    return UserRepository.signUp(username, password);
+  signUp(body) {
+    return UserRepository.signUp(body);
+  }
+
+  findAllUsers() {
+    return UserRepository.findAll();
+  }
+
+  findUserById(id) {
+    return UserService.findById(id);
+  }
+
+  patchUserById(id) {
+    return UserService.patchById(id);
+  }
+
+  removeUserById(id) {
+    return UserService.removeById(id);
   }
 }
 

@@ -2,19 +2,23 @@ const { Model, DataTypes } = require('sequelize');
 
 const sequelizeInstance = require('../sequelize').getSequelizeInstance();
 
-class SignUp extends Model { }
+class User extends Model { }
 
-SignUp.init({
-    userId: {
-      type: DataTypes.STRING,
-      autoIncrement: true,
-      primaryKey: true
-    },
-    password: {
-      type: DataTypes.STRING,
-      allowNull: false
-    }
-  }, { tableName: 'users', timestamps: false, sequelize: getSequelizeInstance() });
+User.init({
+  id: {
+    type: DataTypes.INTEGER,
+    autoIncrement: true,
+    primaryKey: true
+  },
+  username: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  password: {
+    type: DataTypes.STRING,
+    allowNull: false
+  }
+}, { tableName: 'users', timestamps: false, sequelize: getSequelizeInstance() });
 
 /**
  * Function to retrive the sequelize instance.
@@ -24,4 +28,4 @@ function getSequelizeInstance() {
   return sequelizeInstance;
 }
 
-module.exports = SignUp;
+module.exports = User;

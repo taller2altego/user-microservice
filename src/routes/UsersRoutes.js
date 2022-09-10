@@ -9,8 +9,8 @@ module.exports = app => {
 
   app.use('/users', router);
   router.post('/', user.signUp, handlerResponse);
-  // router.patch('/:id', user.editUser, handlerResponse);
-  // router.get('/:id', user.getUserById, handlerResponse);
-  // router.get('/', user.getUsers, handlerResponse);
-  // router.delete('/:id', user.deleteUser, handlerResponse);
+  router.patch('/:id', user.patchUserById, handlerResponse);
+  router.get('/:id', user.findUserById, handlerResponse);
+  router.get('/', user.findAllUsers, handlerResponse);
+  router.delete('/:id', user.removeUserById, handlerResponse);
 };

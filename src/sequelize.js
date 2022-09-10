@@ -22,15 +22,6 @@ function getSequelizeInstance() {
     }
   });
 
-  sequelizeInstance
-    .authenticate()
-    .then(() => {
-      console.log('Connection has been established successfully.');
-    })
-    .catch(err => {
-      console.error('Unable to connect to the database:', err);
-    });
-
   sequelizeInstance.options.define.underscored = true;
   return sequelizeInstance;
 }

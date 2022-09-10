@@ -2,8 +2,11 @@ const UserService = require('../service/UserService');
 
 class UserController {
   async signUp(req, res, next) {
-    const token = await UserService.signUp(req.body.username, req.body.password);
-
+    return UserService.signUp(req.body)
+      .then(({ token }) => {
+        res.customResponse = { statusCode: 201 };
+        next();
+      });
     // .catch((err) => {
     //   if (err.statusCode === undefined) {
     //     res.customResponse = { statusCode: 500, message: 'Unexpected error' };
@@ -12,8 +15,33 @@ class UserController {
     //   }
     //   next();
     // });
-    res.customResponse = { statusCode: 200, token };
-    next();
+  }
+
+  async findAllUsers(req, res, next) {
+    return UserService.findAllUsers()
+      .then(({ users }) => {
+        res.customResponse = { statusCode: 200, data: users };
+        next();
+      });
+  }
+
+  async findUserById(req, res, next) {
+    return UserService.findUserById(req.query.id)
+      .then(({ user }) => {
+        res.customResponse = { statusCode: 200, data: user };
+      });
+  }
+
+  async patchUserById(req, res, next) {
+    return UserService.findUserById(req.query.id)
+      .then(({ user }) => { });
+  }
+
+  async removeUserById(req, res, next) {
+    return UserService.removeUserById()
+      .then(({ }) => {
+
+      });
   }
 }
 
