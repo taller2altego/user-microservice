@@ -21,3 +21,7 @@ services:
       - "5432:5432"
     volumes:
       - ./db/user_table.sql:/docker-entrypoint-initdb.d/1-tables.sql
+    networks:
+      default:
+        aliases:
+          - db

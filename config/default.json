@@ -1,6 +1,6 @@
 {
   "db": {
-    "host": "172.23.0.2",
+    "host": "userdb_microservice",
     "database": "users",
     "username": "user",
     "port": "5432",
