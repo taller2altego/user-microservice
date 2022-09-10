@@ -7,22 +7,31 @@ function getSequelizeInstance() {
     return sequelizeInstance;
   }
 
-  // const { logging: level, db } = require('config');
-  // const Sequelize = require("sequelize");
-  // const { host, database, username, port, password } = db;
-  // sequelizeInstance = new Sequelize(database, username, password, {
-  //   host,
-  //   port,
-  //   dialect: 'postgres',
-  //   operatorsAliases: false,
-  //   logging: level.level === 'debug',
-  //   define: {
-  //     freezeTableName: true,
-  //     underscored: true,
-  //   }
-  // });
+  const { logging: level, db } = require('config');
+  const Sequelize = require("sequelize");
+  const { host, database, username, port, password } = db;
+  sequelizeInstance = new Sequelize(database, username, password, {
+    host,
+    port,
+    dialect: 'postgres',
+    operatorsAliases: false,
+    logging: level.level === 'debug',
+    define: {
+      freezeTableName: true,
+      underscored: true,
+    }
+  });
 
-  // sequelizeInstance.options.define.underscored = true;
+  sequelizeInstance
+    .authenticate()
+    .then(() => {
+      console.log('Connection has been established successfully.');
+    })
+    .catch(err => {
+      console.error('Unable to connect to the database:', err);
+    });
+
+  sequelizeInstance.options.define.underscored = true;
   return sequelizeInstance;
 }
 
@@ -53,7 +62,4 @@ function startConfig(app) {
   };
 }
 
-module.exports = {
-  startConfig,
-  getSequelizeInstance
-};
+module.exports = { startConfig, getSequelizeInstance };
