@@ -4,7 +4,7 @@ services:
     container_name: user_microservice
     build: "."
     ports:
-      - 5000:5000
+      - 5001:5000
     restart: always
     depends_on: 
       - user_postgresql
