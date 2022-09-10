@@ -10,15 +10,15 @@ class UserService {
   }
 
   findUserById(id) {
-    return UserService.findById(id);
+    return UserRepository.findById(id);
   }
 
-  patchUserById(id) {
-    return UserService.patchById(id);
+  patchUserById(id, body) {
+    return UserRepository.patchById(id, body);
   }
 
   removeUserById(id) {
-    return UserService.removeById(id);
+    return UserRepository.removeById(id);
   }
 }
 

@@ -18,7 +18,7 @@ User.init({
     type: DataTypes.STRING,
     allowNull: false
   }
-}, { tableName: 'users', timestamps: false, sequelize: getSequelizeInstance() });
+}, { tableName: 'user', timestamps: false, sequelize: getSequelizeInstance() });
 
 /**
  * Function to retrive the sequelize instance.

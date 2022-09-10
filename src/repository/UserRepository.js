@@ -1,27 +1,27 @@
 const UserModel = require('../model/UserModel');
 
 class UserRepository {
-    constructor() {}
+  constructor() { }
 
-    signUp(body) {
-      return UserModel.create(body);
-    }
+  signUp(body) {
+    return UserModel.create(body);
+  }
 
-    findAll() {
-      return UserModel.findAll();
-    }
-  
-    findById(id) {
-      return UserService.findOne();
-    }
-  
-    patchById(id) {
-      return UserService.patchUser(id);
-    }
-  
-    removeById(id) {
-      return UserService.removeUser(id);
-    }
+  findAll() {
+    return UserModel.findAll();
+  }
+
+  findById(id) {
+    return UserModel.findByPk(id);
+  }
+
+  patchById(id, body) {
+    return UserModel.update(body, { where: { id } });
+  }
+
+  removeById(id) {
+    return UserModel.destroy({ where: { id } });
+  }
 }
-  
+
 module.exports = new UserRepository();

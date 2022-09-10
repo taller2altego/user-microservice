@@ -19,28 +19,35 @@ class UserController {
 
   async findAllUsers(req, res, next) {
     return UserService.findAllUsers()
-      .then(({ users }) => {
+      .then(users => {
         res.customResponse = { statusCode: 200, data: users };
         next();
       });
   }
 
   async findUserById(req, res, next) {
-    return UserService.findUserById(req.query.id)
-      .then(({ user }) => {
+    console.log(req);
+    return UserService.findUserById(req.params.id)
+      .then(user => {
+        console.log(user);
         res.customResponse = { statusCode: 200, data: user };
+        next();
       });
   }
 
   async patchUserById(req, res, next) {
-    return UserService.findUserById(req.query.id)
-      .then(({ user }) => { });
+    return UserService.patchUserById(req.params.id, req.body)
+      .then(() => {
+        res.customResponse = { statusCode: 201 };
+        next();
+      });
   }
 
   async removeUserById(req, res, next) {
-    return UserService.removeUserById()
-      .then(({ }) => {
-
+    return UserService.removeUserById(req.params.id)
+      .then(() => {
+        res.customResponse = { statusCode: 204 };
+        next();
       });
   }
 }
