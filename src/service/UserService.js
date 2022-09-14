@@ -3,24 +3,8 @@ const { errors } = require("config");
 const {
   userNotFound,
   userAlreadyExists,
-  unableToMatchPasswords,
-  missingCredentials,
+  unableToMatchPasswords
 } = errors;
-
-const Ajv = require("ajv");
-const { use } = require('chai');
-const User = require('../model/UserModel');
-const ajv = new Ajv();
-
-const schema = {
-  type: "object",
-  properties: {
-    username: { type: "string" },
-    password: { type: "string" }
-  },
-  required: ["username", "password"],
-  additionalProperties: false
-}
 
 const buildError = (objectMessage) => {
   const err = new Error();
@@ -31,11 +15,6 @@ const buildError = (objectMessage) => {
 
 class UserService {
   async signUp(body) {
-    const valid = ajv.validate(schema, body)
-    if (!valid) {
-      return buildError(missingCredentials);
-    }
-
     return UserRepository.findUserByUsername(body.username)
       .then(user => {
         if (user === null) return UserRepository.signUp(body);

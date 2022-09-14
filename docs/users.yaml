@@ -67,7 +67,7 @@ definitions:
         type: string
       lastname:
         type: string
-      pthoneNumber:
+      phoneNumber:
         type: integer
       email:
         type: string
@@ -83,7 +83,7 @@ definitions:
         type: string
       lastname:
         type: string
-      pthoneNumber:
+      phoneNumber:
         type: integer
       email:
         type: string

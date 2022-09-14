@@ -4,7 +4,8 @@ class UserController {
   signUp(req, res, next) {
     return UserService.signUp(req.body)
       .then(user => {
-        res.customResponse = { statusCode: 201, id: user.id, username: user.username };
+        const { password, ...response } = user;
+        res.customResponse = { statusCode: 201, ...response };
         next();
       })
       .catch((err) => {
