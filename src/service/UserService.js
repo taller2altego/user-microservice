@@ -1,5 +1,5 @@
 const UserRepository = require('../repository/UserRepository');
-const {errors} = require("config");
+const { errors } = require("config");
 const {
   userNotFound,
   userAlreadyExists,
@@ -12,8 +12,8 @@ const ajv = new Ajv();
 const schema = {
   type: "object",
   properties: {
-    username: {type: "string"},
-    password: {type: "string"}
+    username: { type: "string" },
+    password: { type: "string" }
   },
   required: ["username", "password"],
   additionalProperties: false
@@ -33,12 +33,10 @@ class UserService {
       return buildError(missingCredentials);
     }
 
-    return this.findUserById(body.id)
-      .then(() => {
+    return UserRepository.findUserByUsername(body.username)
+      .then(user => {
+        if (user === null) return UserRepository.signUp(body);
         buildError(userAlreadyExists);
-      })
-      .catch(() => {
-        return UserRepository.signUp(body);
       });
   }
 

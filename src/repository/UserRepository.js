@@ -15,6 +15,10 @@ class UserRepository {
     return UserModel.findByPk(id);
   }
 
+  findUserByUsername(username) {
+    return UserModel.findOne({ where: { username } });
+  }
+
   patchById(id, body) {
     return UserModel.update(body, { where: { id } });
   }

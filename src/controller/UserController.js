@@ -3,15 +3,15 @@ const UserService = require('../service/UserService');
 class UserController {
   signUp(req, res, next) {
     return UserService.signUp(req.body)
-      .then(() => {
-        res.customResponse = { statusCode: 201 };
+      .then(user => {
+        res.customResponse = { statusCode: 201, id: user.id, username: user.username };
         next();
       })
       .catch((err) => {
         if (err.statusCode === undefined) {
-          res.customResponse = { statusCode: 500, message: 'Unexpected Error'};
+          res.customResponse = { statusCode: 500, message: 'Unexpected Error' };
         } else {
-          res.customResponse = { statusCode: err.statusCode, message: err.message};
+          res.customResponse = { statusCode: err.statusCode, message: err.message };
         }
         next();
       });
@@ -52,9 +52,9 @@ class UserController {
       })
       .catch((err) => {
         if (err.statusCode === undefined) {
-          res.customResponse = { statusCode: 500, message: 'Unexpected Error'};
+          res.customResponse = { statusCode: 500, message: 'Unexpected Error' };
         } else {
-          res.customResponse = { statusCode: err.statusCode, message: err.message};
+          res.customResponse = { statusCode: err.statusCode, message: err.message };
         }
         next();
       });
@@ -68,9 +68,9 @@ class UserController {
       })
       .catch((err) => {
         if (err.statusCode === undefined) {
-          res.customResponse = { statusCode: 500, message: 'Unexpected Error'};
+          res.customResponse = { statusCode: 500, message: 'Unexpected Error' };
         } else {
-          res.customResponse = { statusCode: err.statusCode, message: err.message};
+          res.customResponse = { statusCode: err.statusCode, message: err.message };
         }
         next();
       });
