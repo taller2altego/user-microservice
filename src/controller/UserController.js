@@ -75,6 +75,25 @@ class UserController {
         next();
       });
   }
+
+  async changePasswordByUsername(req, res, next) {
+    return UserService.changePasswordByUsername(req.body.username, req.body.newPassword, req.body.newPasswordAgain)
+      .then(() => {
+        res.customResponse = { statusCode: 204 };
+        next();
+      })
+      .catch((err) => {
+        if (err.statusCode === undefined) {
+          res.customResponse = { statusCode: 500, message: 'Unexpected Error' };
+        } else {
+          res.customResponse = { statusCode: err.statusCode, message: err.message };
+        }
+        next();
+      });
+  }
+
+
+
 }
 
 module.exports = new UserController();

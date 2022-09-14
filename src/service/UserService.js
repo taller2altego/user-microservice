@@ -3,10 +3,13 @@ const { errors } = require("config");
 const {
   userNotFound,
   userAlreadyExists,
+  unableToMatchPasswords,
   missingCredentials,
 } = errors;
 
 const Ajv = require("ajv");
+const { use } = require('chai');
+const User = require('../model/UserModel');
 const ajv = new Ajv();
 
 const schema = {
@@ -53,10 +56,18 @@ class UserService {
     });
   }
 
+
   patchUserById(id, body) {
     return this.findUserById(id)
       .then(() => {
         return UserRepository.patchById(id, body);
+      });
+  }
+
+  patchUserByUsername(username, body) {
+    return UserRepository.findUserByUsername(username)
+      .then(() => {
+        return UserRepository.patchByUsername(username, body);
       });
   }
 
@@ -65,6 +76,13 @@ class UserService {
       .then(() => {
         return UserRepository.removeById(id);
       });
+  }
+
+  changePasswordByUsername(username, newPassword, newPasswordAgain) {
+    if (newPassword === newPasswordAgain) {
+      return this.patchUserByUsername(username, { "password": newPassword });
+    }
+    return buildError(unableToMatchPasswords);
   }
 }
 
