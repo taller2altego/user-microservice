@@ -21,6 +21,10 @@
     "missingCredentials": {
       "statusCode": 401,
       "message": "Todos los campos indicados con * son requeridos."
+    },
+    "unableToMatchPasswords": {
+      "statusCode": 402,
+      "message": "Las contraseñas indicadas no coinciden, intentelo nuevamente."
     }
   }
 }

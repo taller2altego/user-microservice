@@ -23,8 +23,19 @@ class UserRepository {
     return UserModel.update(body, { where: { id } });
   }
 
+  patchByUsername(username, body) {
+    return UserModel.update(body, { where: { username } });
+  }
+
   removeById(id) {
     return UserModel.destroy({ where: { id } });
+  }
+
+  findUserIdByUsername(username) {
+    return UserModel.findOne({ where: { username } })
+      .then((user) => {
+        return user.id;
+      })
   }
 }
 
