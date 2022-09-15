@@ -2,6 +2,8 @@ const express = require('express');
 const cors = require("cors");
 const swaggerJSDoc = require("swagger-jsdoc");
 const swaggerUi = require("swagger-ui-express");
+const morgan = require('morgan');
+const logger = require('./winston');
 
 const app = express();
 app.use(
@@ -12,6 +14,13 @@ app.use(
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+const myStream = {
+  write: text => {
+    logger.info(text);
+  }
+};
+app.use(morgan('combined', { stream: myStream }));
 
 const swaggerDefinition = {
   openapi: "3.0.0",

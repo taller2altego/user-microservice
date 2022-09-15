@@ -6,8 +6,10 @@ services:
     ports:
       - 5001:5000
     restart: always
-    depends_on: 
+    depends_on:
       - user_postgresql
+    networks:
+      - fiuber-network
 
   user_postgresql:
     container_name: userdb_microservice
@@ -22,6 +24,9 @@ services:
     volumes:
       - ./db/user_table.sql:/docker-entrypoint-initdb.d/1-tables.sql
     networks:
-      default:
-        aliases:
-          - db
+      - fiuber-network
+
+networks:
+  fiuber-network:
+    driver: bridge
+    name: fiuber-network

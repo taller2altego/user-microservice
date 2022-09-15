@@ -1,5 +1,6 @@
 const UserRepository = require('../repository/UserRepository');
 const { errors } = require("config");
+const logger = require('../../winston');
 const {
   userNotFound,
   userAlreadyExists,
@@ -17,6 +18,8 @@ class UserService {
   async signUp(body) {
     return UserRepository.findUserByEmail(body.email)
       .then(user => {
+        logger.debug('asd');
+        logger.debug(typeof(user));
         if (user === null) {
           return UserRepository.signUp(body);
         }

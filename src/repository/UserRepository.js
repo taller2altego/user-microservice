@@ -24,7 +24,12 @@ class UserRepository {
   findUserByEmail(email) {
     return UserModel
       .findOne({ where: { email } })
-      .then(user => user.toJSON());
+      .then(user => {
+        if (user === null) {
+          return user;
+        }
+        return user.toJSON();
+      });
   }
 
   patchById(id, body) {

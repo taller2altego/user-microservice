@@ -1,15 +1,18 @@
 const UserService = require('../service/UserService');
+const logger = require('../../winston');
 
 class UserController {
   signUp(req, res, next) {
+    logger.debug(req.body);
     return UserService.signUp(req.body)
       .then(user => {
         const { password, ...response } = user;
         res.customResponse = { statusCode: 201, ...response };
+        logger.log("debug", res.customResponse);
         next();
       })
       .catch((err) => {
-        console.log(err);
+        logger.log("error", err);
         if (err.statusCode === undefined) {
           res.customResponse = { statusCode: 500, message: 'Unexpected Error' };
         } else {
