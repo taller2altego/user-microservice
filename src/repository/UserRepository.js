@@ -4,35 +4,43 @@ class UserRepository {
   constructor() { }
 
   signUp(body) {
-    return UserModel.create(body);
+    return UserModel
+      .create(body)
+      .then(user => user.toJSON());
   }
 
   findAll() {
-    return UserModel.findAll();
+    return UserModel
+      .findAll()
+      .then(users => users.map(user => user.toJSON()));
   }
 
   findById(id) {
-    return UserModel.findByPk(id);
+    return UserModel
+      .findByPk(id)
+      .then(user => user.toJSON());
   }
 
-  findUserByUsername(username) {
-    return UserModel.findOne({ where: { username } });
+  findUserByEmail(email) {
+    return UserModel
+      .findOne({ where: { email } })
+      .then(user => user.toJSON());
   }
 
   patchById(id, body) {
     return UserModel.update(body, { where: { id } });
   }
 
-  patchByUsername(username, body) {
-    return UserModel.update(body, { where: { username } });
+  patchByEmail(email, body) {
+    return UserModel.update(body, { where: { email } });
   }
 
   removeById(id) {
     return UserModel.destroy({ where: { id } });
   }
 
-  findUserIdByUsername(username) {
-    return UserModel.findOne({ where: { username } })
+  findUserIdByEmail(email) {
+    return UserModel.findOne({ where: { email } })
       .then((user) => {
         return user.id;
       })

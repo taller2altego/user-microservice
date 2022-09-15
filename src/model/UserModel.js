@@ -10,7 +10,19 @@ User.init({
     autoIncrement: true,
     primaryKey: true
   },
-  username: {
+  name: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  lastname: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  phoneNumber: {
+    type: DataTypes.INTEGER,
+    allowNull: false
+  },
+  email: {
     type: DataTypes.STRING,
     allowNull: false
   },

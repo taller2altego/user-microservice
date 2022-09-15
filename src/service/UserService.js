@@ -15,9 +15,11 @@ const buildError = (objectMessage) => {
 
 class UserService {
   async signUp(body) {
-    return UserRepository.findUserByUsername(body.username)
+    return UserRepository.findUserByEmail(body.email)
       .then(user => {
-        if (user === null) return UserRepository.signUp(body);
+        if (user === null) {
+          return UserRepository.signUp(body);
+        }
         buildError(userAlreadyExists);
       });
   }
@@ -43,10 +45,10 @@ class UserService {
       });
   }
 
-  patchUserByUsername(username, body) {
-    return UserRepository.findUserByUsername(username)
+  patchUserByEmail(email, body) {
+    return UserRepository.findUserByEmail(email)
       .then(() => {
-        return UserRepository.patchByUsername(username, body);
+        return UserRepository.patchByEmail(email, body);
       });
   }
 
@@ -57,9 +59,9 @@ class UserService {
       });
   }
 
-  changePasswordByUsername(username, newPassword, newPasswordAgain) {
+  changePasswordByEmail(email, newPassword, newPasswordAgain) {
     if (newPassword === newPasswordAgain) {
-      return this.patchUserByUsername(username, { "password": newPassword });
+      return this.patchUserByEmail(email, { "password": newPassword });
     }
     return buildError(unableToMatchPasswords);
   }

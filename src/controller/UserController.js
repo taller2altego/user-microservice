@@ -9,6 +9,7 @@ class UserController {
         next();
       })
       .catch((err) => {
+        console.log(err);
         if (err.statusCode === undefined) {
           res.customResponse = { statusCode: 500, message: 'Unexpected Error' };
         } else {
@@ -21,7 +22,8 @@ class UserController {
   async findAllUsers(req, res, next) {
     return UserService.findAllUsers()
       .then(users => {
-        res.customResponse = { statusCode: 200, data: users };
+        const data = users.map(({ password, ...r }) => r);
+        res.customResponse = { statusCode: 200, data };
         next();
       });
   }
@@ -30,8 +32,8 @@ class UserController {
     console.log(req);
     return UserService.findUserById(req.params.id)
       .then(user => {
-        console.log(user);
-        res.customResponse = { statusCode: 200, data: user };
+        const { password, ...response } = user;
+        res.customResponse = { statusCode: 200, ...response };
         next();
       })
       .catch((err) => {
