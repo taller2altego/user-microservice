@@ -4,7 +4,8 @@ const logger = require('../../winston');
 const {
   userNotFound,
   userAlreadyExists,
-  unableToMatchPasswords
+  unableToMatchPasswords,
+  unableToMatchEmail
 } = errors;
 
 const buildError = (objectMessage) => {
@@ -18,7 +19,6 @@ class UserService {
   async signUp(body) {
     return UserRepository.findUserByEmail(body.email)
       .then(user => {
-        logger.debug('asd');
         logger.debug(typeof(user));
         if (user === null) {
           return UserRepository.signUp(body);
@@ -40,7 +40,6 @@ class UserService {
     });
   }
 
-
   patchUserById(id, body) {
     return this.findUserById(id)
       .then(() => {
@@ -55,10 +54,13 @@ class UserService {
       });
   }
 
-  removeUserById(id) {
+  removeUserById(id, email) {
     return this.findUserById(id)
-      .then(() => {
-        return UserRepository.removeById(id);
+      .then((user) => {
+        if (email === user.email){
+          return UserRepository.removeById(id);
+        }
+        return buildError(unableToMatchEmail);
       });
   }
 

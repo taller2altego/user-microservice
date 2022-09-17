@@ -82,8 +82,8 @@ class UserController {
       });
   }
 
-  async changePasswordByUsername(req, res, next) {
-    return UserService.changePasswordByUsername(req.body.username, req.body.newPassword, req.body.newPasswordAgain)
+  async changePasswordByEmail(req, res, next) {
+    return UserService.changePasswordByEmail(req.body.email, req.body.newPassword, req.body.newPasswordAgain)
       .then(() => {
         res.customResponse = { statusCode: 204 };
         next();

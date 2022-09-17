@@ -25,6 +25,10 @@
     "unableToMatchPasswords": {
       "statusCode": 402,
       "message": "Las contraseñas indicadas no coinciden, intentelo nuevamente."
+    },
+    "unableToMatchEmail": {
+      "statusCode": 402,
+      "message": "El email indicado no coincide con el email del usuario."
     }
   }
 }
