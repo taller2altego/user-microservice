@@ -63,7 +63,7 @@ class UserController {
   }
 
   async removeUserById(req, res, next) {
-    return UserService.removeUserById(req.params.id)
+    return UserService.removeUserById(req.params.id, req.body.email)
       .then(() => {
         res.customResponse = { statusCode: 204 };
         next();

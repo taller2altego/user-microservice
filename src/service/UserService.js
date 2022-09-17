@@ -32,11 +32,9 @@ class UserService {
   }
 
   findUserById(id) {
-    return UserRepository.findById(id).then(user => {
-      if (user === null) {
-        buildError(userNotFound);
-      }
-      return user;
+    return UserRepository.findById(id)
+    .catch((err) => {
+      return buildError(userNotFound);
     });
   }
 
@@ -57,6 +55,8 @@ class UserService {
   removeUserById(id, email) {
     return this.findUserById(id)
       .then((user) => {
+        console.log(email);
+        console.log(user);
         if (email === user.email){
           return UserRepository.removeById(id);
         }
