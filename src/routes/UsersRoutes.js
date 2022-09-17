@@ -1,5 +1,6 @@
-const validateUser = require('../controller/UserValidate');
-const user = require('../controller/UserController');
+const validateUser = require('../controller/users/UserValidate');
+const user = require('../controller/users/UserController');
+
 const router = require('express').Router();
 
 module.exports = app => {

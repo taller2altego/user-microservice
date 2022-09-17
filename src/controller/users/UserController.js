@@ -1,18 +1,14 @@
 const UserService = require('../../service/UserService');
-const logger = require('../../../winston');
 
 class UserController {
   signUp(req, res, next) {
-    logger.debug(req.body);
     return UserService.signUp(req.body)
       .then(user => {
         const { password, ...response } = user;
         res.customResponse = { statusCode: 201, ...response };
-        logger.log("debug", res.customResponse);
         next();
       })
       .catch((err) => {
-        logger.log("error", err);
         if (err.statusCode === undefined) {
           res.customResponse = { statusCode: 500, message: 'Unexpected Error' };
         } else {
@@ -82,8 +78,8 @@ class UserController {
       });
   }
 
-  async changePasswordByEmail(req, res, next) {
-    return UserService.changePasswordByEmail(req.body.email, req.body.newPassword, req.body.newPasswordAgain)
+  async changePasswordByUsername(req, res, next) {
+    return UserService.changePasswordByUsername(req.body.username, req.body.newPassword, req.body.newPasswordAgain)
       .then(() => {
         res.customResponse = { statusCode: 204 };
         next();
