@@ -1,5 +1,5 @@
-const UserService = require('../service/UserService');
-const logger = require('../../winston');
+const UserService = require('../../service/UserService');
+const logger = require('../../../winston');
 
 class UserController {
   signUp(req, res, next) {
