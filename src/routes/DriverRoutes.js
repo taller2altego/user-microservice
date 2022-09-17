@@ -1,5 +1,5 @@
-const validateDriver = require('../controller/driver/driverController');
-const driverController = require('../controller/driver/driverController');
+const validateDriver = require('../controller/driver/DriverValidate');
+const driverController = require('../controller/driver/DriverController');
 
 const router = require('express').Router();
 
@@ -10,10 +10,10 @@ module.exports = app => {
     res.status(statusCode).send(otherFields);
   };
 
-  app.use('/users/:id/driver', router);
+  app.use('/users/:driverId/driver', router);
   router.post('/', validateDriver, driverController.associateDriverToUser, handlerResponse);
-  router.patch('/:id', driverController.patchDriver, handlerResponse);
-  router.get('/:id', driverController.findDriverById, handlerResponse);
   router.get('/', driverController.findAllDrivers, handlerResponse);
+  router.get('/:id', driverController.findDriverById, handlerResponse);
+  router.patch('/:id', driverController.patchDriver, handlerResponse);
   router.delete('/:id', driverController.removeDriverById, handlerResponse);
 };

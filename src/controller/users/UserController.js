@@ -2,7 +2,7 @@ const UserService = require('../../service/UserService');
 
 class UserController {
   signUp(req, res, next) {
-    return UserService.signUp(req.body)
+    return UserService.signUp(req.body, req.params.id)
       .then(user => {
         const { password, ...response } = user;
         res.customResponse = { statusCode: 201, ...response };
