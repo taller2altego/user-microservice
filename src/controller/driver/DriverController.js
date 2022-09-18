@@ -3,7 +3,8 @@ const handlerError = require('../../utils/handlerError');
 
 class DriverController {
   associateDriverToUser(req, res, next) {
-    return DriverService.associateDriverToUser(req.body)
+    console.log('aca');
+    return DriverService.associateDriverToUser(req.body, req.params.userId)
       .then(user => {
         const { password, ...response } = user;
         res.customResponse = { statusCode: 201, ...response };
@@ -29,10 +30,9 @@ class DriverController {
   }
 
   async findDriverById(req, res, next) {
-    return DriverService.findDriverById(req.params.id)
-      .then(user => {
-        const { password, ...response } = user;
-        res.customResponse = { statusCode: 200, ...response };
+    return DriverService.findDriverById(req.params.userId, req.params.driverId)
+      .then(driver => {
+        res.customResponse = { statusCode: 200, ...driver };
         next();
       })
       .catch(err => {
@@ -42,19 +42,20 @@ class DriverController {
   }
 
   async patchDriverById(req, res, next) {
-    return DriverService.patchDriver(req.params.id, req.body)
+    return DriverService.patchDriverById(req.params.userId, req.params.driverId, req.body)
       .then(() => {
         res.customResponse = { statusCode: 201 };
         next();
       })
       .catch(err => {
+        console.log(err);
         res.customResponse = handlerError(err);
         next();
       });
   }
 
   async removeDriverById(req, res, next) {
-    return DriverService.removeDriverById(req.params.id)
+    return DriverService.removeDriverById(req.params.userId, req.params.driverId)
       .then(() => {
         res.customResponse = { statusCode: 204 };
         next();

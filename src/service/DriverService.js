@@ -2,7 +2,7 @@ const UserRepository = require('../repository/UserRepository');
 const DriverRepository = require('../repository/DriverRepository');
 
 const { errors } = require("config");
-const { userNotFound } = errors;
+const { userNotFound, driverNotFound } = errors;
 
 const buildError = (objectMessage) => {
   const err = new Error();
@@ -12,44 +12,35 @@ const buildError = (objectMessage) => {
 };
 
 class DriverService {
-  async associateDriverToUser(body, driverId) {
-    return UserRepository.findById(driverId)
-      .then(user => {
-        if (user === null) {
-          buildError(userNotFound);
-        }
-        return DriverRepository.create({ ...body, userId: driverId });
-      });
+  async associateDriverToUser(body, userId) {
+    const user = await UserRepository.findById(userId);
+    if (user === null) {
+      buildError(userNotFound);
+    }
+    return DriverRepository.create({ ...body, userId });
   }
 
   findAllDrivers() {
     return DriverRepository.findAll();
   }
 
-  findDriverById(id) {
-    return DriverRepository.findById(id)
-      .then(user => {
-        if (user === null) {
-          buildError(userNotFound);
+  findDriverById(userId, driverId) {
+    return DriverRepository.findById(userId, driverId)
+      .then(driver => {
+        console.log(driver);
+        if (driver === null) {
+          buildError(driverNotFound);
         }
-        return user;
+        return driver;
       });
   }
 
-  patchDriverById(id, body) {
-    return DriverRepository
-      .findDriverById(id)
-      .patchById(id, body);
+  patchDriverById(userId, driverId, body) {
+    return this.findDriverById(userId, driverId).then(() => DriverRepository.patchById(driverId, body));
   }
 
-  removeDriverById(id, email) {
-    return this.findUserById(id)
-      .then((user) => {
-        if (email === user.email) {
-          return DriverRepository.removeById(id);
-        }
-        return buildError(unableToMatchEmail);
-      });
+  removeDriverById(userId, driverId) {
+    return this.findDriverById(userId, driverId).then(() => DriverRepository.removeById(driverId));
   }
 }
 

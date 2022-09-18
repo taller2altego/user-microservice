@@ -10,6 +10,9 @@ Driver.init({
     autoIncrement: true,
     primaryKey: true
   },
+  userId: {
+    type: DataTypes.INTEGER
+  },
   license: {
     type: DataTypes.STRING,
     allowNull: false

@@ -6,3 +6,11 @@ CREATE TABLE "user"(
     email VARCHAR(50) UNIQUE NOT NULL,
     password VARCHAR(50) NOT NULL
 );
+
+CREATE TABLE "driver"(
+    id SERIAL PRIMARY KEY,
+    user_id INT NOT NULL,
+    license VARCHAR(50) NOT NULL,
+    model VARCHAR(50) NOT NULL,
+    license_plate VARCHAR(50) NOT NULL
+);

@@ -1,5 +1,7 @@
 const validateUser = require('../controller/users/UserValidate');
+const validateDriver = require('../controller/driver/DriverValidate');
 const user = require('../controller/users/UserController');
+const driverController = require('../controller/driver/DriverController');
 
 const router = require('express').Router();
 
@@ -16,6 +18,12 @@ module.exports = app => {
   router.get('/:id', user.findUserById, handlerResponse);
   router.get('/', user.findAllUsers, handlerResponse);
   router.delete('/:id', user.removeUserById, handlerResponse);
+
+  router.post('/:userId/driver', validateDriver, driverController.associateDriverToUser, handlerResponse);
+  router.get('/:userId/driver', driverController.findAllDrivers, handlerResponse);
+  router.get('/:userId/driver/:driverId', driverController.findDriverById, handlerResponse);
+  router.patch('/:userId/driver/:driverId', driverController.patchDriverById, handlerResponse);
+  router.delete('/:userId/driver/:driverId', driverController.removeDriverById, handlerResponse);
 
   //router.post('/reset_password', user.changePasswordByEmail, handlerResponse);
 };

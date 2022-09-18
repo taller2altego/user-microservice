@@ -6,27 +6,30 @@ class DriverRepository {
   create(body) {
     return DriverModel
       .create(body)
-      .then(user => user.toJSON());
+      .then(driver => driver.toJSON());
   }
 
   findAll() {
     return DriverModel
       .findAll()
-      .then(users => users.map(user => user.toJSON()));
+      .then(drivers => drivers.map(driver => driver.toJSON()));
   }
 
-  findById(id) {
+  findById(userId, driverId) {
     return DriverModel
-      .findByPk(id)
-      .then(user => user.toJSON());
+      .findOne({ where: { id: driverId, userId } })
+      .then(driver => driver ? driver.toJSON() : null);
   }
 
-  patchById(id, body) {
-    return DriverModel.update(body, { where: { id } });
+  patchById(driverId, body) {
+    return DriverModel
+      .update(body, { where: { id: driverId } })
+      .then(() => body);
   }
 
-  removeById(id) {
-    return DriverModel.destroy({ where: { id } });
+  removeById(driverId) {
+    return DriverModel
+      .destroy({ where: { id: driverId } });
   }
 }
 
