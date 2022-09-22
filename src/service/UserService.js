@@ -19,7 +19,7 @@ class UserService {
   async signUp(body) {
     return UserRepository.findUserByEmail(body.email)
       .then(user => {
-        logger.debug(typeof(user));
+        logger.debug(typeof (user));
         if (user === null) {
           return UserRepository.signUp(body);
         }
@@ -27,15 +27,15 @@ class UserService {
       });
   }
 
-  findAllUsers() {
-    return UserRepository.findAll();
+  findAllUsers(queryParams) {
+    return UserRepository.findAll(queryParams);
   }
 
   findUserById(id) {
     return UserRepository.findById(id)
-    .catch((err) => {
-      return buildError(userNotFound);
-    });
+      .catch((err) => {
+        return buildError(userNotFound);
+      });
   }
 
   patchUserById(id, body) {
@@ -57,7 +57,7 @@ class UserService {
       .then((user) => {
         console.log(email);
         console.log(user);
-        if (email === user.email){
+        if (email === user.email) {
           return UserRepository.removeById(id);
         }
         return buildError(unableToMatchEmail);

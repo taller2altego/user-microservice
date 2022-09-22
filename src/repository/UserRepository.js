@@ -9,9 +9,14 @@ class UserRepository {
       .then(user => user.toJSON());
   }
 
-  findAll() {
+  findAll({ email }) {
+    const where = {};
+    if (email) {
+      where['email'] = email;
+    }
+
     return UserModel
-      .findAll()
+      .findAll({ where })
       .then(users => users.map(user => user.toJSON()));
   }
 
