@@ -4,7 +4,6 @@ const logger = require('../../winston');
 const {
   userNotFound,
   userAlreadyExists,
-  unableToMatchPasswords,
   unableToMatchEmail
 } = errors;
 
@@ -64,11 +63,8 @@ class UserService {
       });
   }
 
-  changePasswordByEmail(email, newPassword, newPasswordAgain) {
-    if (newPassword === newPasswordAgain) {
-      return this.patchUserByEmail(email, { "password": newPassword });
-    }
-    return buildError(unableToMatchPasswords);
+  changePasswordByEmail(email, newPassword) {
+    return this.patchUserByEmail(email, { "password": newPassword });
   }
 }
 

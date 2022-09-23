@@ -18,6 +18,7 @@ module.exports = app => {
   router.get('/:id', user.findUserById, handlerResponse);
   router.get('/', user.findAllUsers, handlerResponse);
   router.delete('/:id', user.removeUserById, handlerResponse);
+  router.post('/change_password', user.changePasswordByEmail, handlerResponse);
 
   router.post('/:userId/driver', validateDriver, driverController.associateDriverToUser, handlerResponse);
   router.get('/:userId/driver', driverController.findAllDrivers, handlerResponse);
@@ -25,5 +26,4 @@ module.exports = app => {
   router.patch('/:userId/driver/:driverId', driverController.patchDriverById, handlerResponse);
   router.delete('/:userId/driver/:driverId', driverController.removeDriverById, handlerResponse);
 
-  //router.post('/reset_password', user.changePasswordByEmail, handlerResponse);
 };
