@@ -37,6 +37,18 @@ class UserService {
       });
   }
 
+  verifyUserByEmail(email) {
+    return UserRepository.findUserByEmail(email)
+      .then((user) => {
+        if (user === null) {
+          return buildError(userNotFound)
+        }
+      })
+      .catch(() => {
+        return buildError(userNotFound);
+      });
+  }
+
   patchUserById(id, body) {
     return this.findUserById(id)
       .then(() => {

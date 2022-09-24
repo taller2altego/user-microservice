@@ -16,9 +16,12 @@ module.exports = app => {
   router.post('/', validateUser, user.signUp, handlerResponse);
   router.patch('/:id', user.patchUserById, handlerResponse);
   router.get('/:id', user.findUserById, handlerResponse);
+
   router.get('/', user.findAllUsers, handlerResponse);
   router.delete('/:id', user.removeUserById, handlerResponse);
   router.post('/change_password', user.changePasswordByEmail, handlerResponse);
+  router.get('/verifyUserByEmail', user.verifyUserByEmail, handlerResponse);
+
 
   router.post('/:userId/driver', validateDriver, driverController.associateDriverToUser, handlerResponse);
   router.get('/:userId/driver', driverController.findAllDrivers, handlerResponse);

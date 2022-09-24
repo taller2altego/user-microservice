@@ -48,13 +48,6 @@ class UserRepository {
   removeById(id) {
     return UserModel.destroy({ where: { id } });
   }
-
-  findUserIdByEmail(email) {
-    return UserModel.findOne({ where: { email } })
-      .then((user) => {
-        return user.id;
-      })
-  }
 }
 
 module.exports = new UserRepository();
