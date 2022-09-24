@@ -20,7 +20,7 @@ module.exports = app => {
   router.get('/', user.findAllUsers, handlerResponse);
   router.delete('/:id', user.removeUserById, handlerResponse);
   router.post('/change_password', user.changePasswordByEmail, handlerResponse);
-  router.get('/verifyUserByEmail', user.verifyUserByEmail, handlerResponse);
+  router.post('/verifyUserByEmail', user.verifyUserByEmail, handlerResponse);
 
 
   router.post('/:userId/driver', validateDriver, driverController.associateDriverToUser, handlerResponse);
