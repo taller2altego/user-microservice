@@ -3,8 +3,8 @@ const { errors } = require("config");
 const logger = require('../../winston');
 const {
   userNotFound,
+  wrongPassword,
   userAlreadyExists,
-  unableToMatchPasswords,
   unableToMatchEmail
 } = errors;
 
@@ -19,7 +19,7 @@ class UserService {
   async signUp(body) {
     return UserRepository.findUserByEmail(body.email)
       .then(user => {
-        logger.debug(typeof(user));
+        logger.debug(typeof (user));
         if (user === null) {
           return UserRepository.signUp(body);
         }
@@ -27,15 +27,43 @@ class UserService {
       });
   }
 
-  findAllUsers() {
-    return UserRepository.findAll();
+  async login(queryParams) {
+    console.log(queryParams);
+    return this
+      .findAllUsers(queryParams)
+      .then(response => {
+        console.log(response);
+        if (!response.length) {
+          return buildError(userNotFound);
+        } else if (response[0].password != queryParams.password) {
+          return buildError(wrongPassword);
+        } else {
+          return response;
+        }
+      });
+  }
+
+  findAllUsers(queryParams) {
+    return UserRepository.findAll(queryParams);
   }
 
   findUserById(id) {
     return UserRepository.findById(id)
-    .catch((err) => {
-      return buildError(userNotFound);
-    });
+      .catch((err) => {
+        return buildError(userNotFound);
+      });
+  }
+
+  verifyUserByEmail(email) {
+    return UserRepository.findUserByEmail(email)
+      .then((user) => {
+        if (user === null) {
+          return buildError(userNotFound)
+        }
+      })
+      .catch(() => {
+        return buildError(userNotFound);
+      });
   }
 
   patchUserById(id, body) {
@@ -57,18 +85,15 @@ class UserService {
       .then((user) => {
         console.log(email);
         console.log(user);
-        if (email === user.email){
+        if (email === user.email) {
           return UserRepository.removeById(id);
         }
         return buildError(unableToMatchEmail);
       });
   }
 
-  changePasswordByEmail(email, newPassword, newPasswordAgain) {
-    if (newPassword === newPasswordAgain) {
-      return this.patchUserByEmail(email, { "password": newPassword });
-    }
-    return buildError(unableToMatchPasswords);
+  changePasswordByEmail(email, newPassword) {
+    return this.patchUserByEmail(email, { "password": newPassword });
   }
 }
 
