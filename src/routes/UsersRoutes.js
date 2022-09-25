@@ -13,6 +13,7 @@ module.exports = app => {
   };
 
   app.use('/users', router);
+  router.get('/login', user.login, handlerResponse);
   router.post('/', validateUser, user.signUp, handlerResponse);
   router.patch('/:id', user.patchUserById, handlerResponse);
   router.get('/:id', user.findUserById, handlerResponse);

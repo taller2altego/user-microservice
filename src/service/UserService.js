@@ -3,6 +3,7 @@ const { errors } = require("config");
 const logger = require('../../winston');
 const {
   userNotFound,
+  wrongPassword,
   userAlreadyExists,
   unableToMatchPasswords,
   unableToMatchEmail
@@ -25,6 +26,22 @@ class UserService {
         }
         buildError(userAlreadyExists);
       });
+  }
+
+  async login(queryParams) {
+    console.log(queryParams);
+    return this
+      .findAllUsers(queryParams)
+      .then(response => {
+        console.log(response);
+        if (!response.length) {
+          return buildError(userNotFound);
+        } else if (response[0].password != queryParams.password) {
+          return buildError(wrongPassword);
+        } else {
+          return response;
+        }
+      })
   }
 
   findAllUsers(queryParams) {

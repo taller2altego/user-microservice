@@ -18,6 +18,16 @@ class UserController {
       });
   }
 
+  async login(req, res, next) {
+    console.log(req.query);
+    return UserService.login(req.query)
+      .then(users => {
+        const data = users.map(({ password, ...r }) => r);
+        res.customResponse = { statusCode: 200, data };
+        next();
+      });
+  }
+
   async findAllUsers(req, res, next) {
     return UserService.findAllUsers(req.query)
       .then(users => {
