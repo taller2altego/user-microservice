@@ -25,6 +25,11 @@ class UserController {
         const data = users.map(({ password, ...r }) => r);
         res.customResponse = { statusCode: 200, data };
         next();
+      })
+      .catch(err => {
+        console.log()
+        res.customResponse = { statusCode: err.statusCode, message: err.message };
+        next();
       });
   }
 
@@ -33,6 +38,10 @@ class UserController {
       .then(users => {
         const data = users.map(({ password, ...r }) => r);
         res.customResponse = { statusCode: 200, data };
+        next();
+      })
+      .catch(err => {
+        res.customResponse = { statusCode: err.statusCode, message: err.message };
         next();
       });
   }
@@ -55,6 +64,26 @@ class UserController {
         next();
       });
   }
+
+  async verifyUserByEmail(req, res, next) {
+    console.log(req);
+    return UserService.verifyUserByEmail(req.body.email)
+      .then(() => {
+        res.customResponse = { statusCode: 200 };
+        next();
+      })
+      .catch((err) => {
+        console.log(err);
+        if (err.statusCode === undefined) {
+          res.customResponse = { statusCode: 500, message: 'Unexpected Error' };
+        } else {
+          res.customResponse = { statusCode: err.statusCode, message: err.message };
+        }
+        next();
+      });
+  }
+
+
 
   async patchUserById(req, res, next) {
     return UserService.patchUserById(req.params.id, req.body)
@@ -88,8 +117,8 @@ class UserController {
       });
   }
 
-  async changePasswordByUsername(req, res, next) {
-    return UserService.changePasswordByUsername(req.body.username, req.body.newPassword, req.body.newPasswordAgain)
+  async changePasswordByEmail(req, res, next) {
+    return UserService.changePasswordByEmail(req.body.username, req.body.newPassword)
       .then(() => {
         res.customResponse = { statusCode: 204 };
         next();

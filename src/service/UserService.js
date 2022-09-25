@@ -5,7 +5,6 @@ const {
   userNotFound,
   wrongPassword,
   userAlreadyExists,
-  unableToMatchPasswords,
   unableToMatchEmail
 } = errors;
 
@@ -41,7 +40,7 @@ class UserService {
         } else {
           return response;
         }
-      })
+      });
   }
 
   findAllUsers(queryParams) {
@@ -51,6 +50,18 @@ class UserService {
   findUserById(id) {
     return UserRepository.findById(id)
       .catch((err) => {
+        return buildError(userNotFound);
+      });
+  }
+
+  verifyUserByEmail(email) {
+    return UserRepository.findUserByEmail(email)
+      .then((user) => {
+        if (user === null) {
+          return buildError(userNotFound)
+        }
+      })
+      .catch(() => {
         return buildError(userNotFound);
       });
   }
@@ -81,11 +92,8 @@ class UserService {
       });
   }
 
-  changePasswordByEmail(email, newPassword, newPasswordAgain) {
-    if (newPassword === newPasswordAgain) {
-      return this.patchUserByEmail(email, { "password": newPassword });
-    }
-    return buildError(unableToMatchPasswords);
+  changePasswordByEmail(email, newPassword) {
+    return this.patchUserByEmail(email, { "password": newPassword });
   }
 }
 
