@@ -42,6 +42,7 @@ class UserRepository {
   }
 
   patchByEmail(email, body) {
+    console.log(body);
     return UserModel.update(body, { where: { email } });
   }
 

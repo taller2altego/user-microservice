@@ -93,7 +93,10 @@ class UserService {
   }
 
   changePasswordByEmail(email, newPassword) {
-    return this.patchUserByEmail(email, { "password": newPassword });
+    return this.patchUserByEmail(email, {
+      password: newPassword,
+      name: "FACU123"
+    });
   }
 }
 
