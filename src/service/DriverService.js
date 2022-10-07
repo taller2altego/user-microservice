@@ -42,6 +42,21 @@ class DriverService {
   removeDriverById(userId, driverId) {
     return this.findDriverById(userId, driverId).then(() => DriverRepository.removeById(driverId));
   }
+
+  addDriverScoreById(id, score) {
+    return this.findDriverById(userId, driverId)
+      .then((user) => {
+        const oldNumberOfScores = driver.score.numberOfScores;
+        const oldtotalScore = driver.score.totalScore;
+        const newScore = {
+          numberOfScores: oldNumberOfScores + 1,
+          totalScore: (oldtotalScore * oldNumberOfScores + score) / (oldNumberOfScores + 1)
+        };
+        return DriverRepository.patchDriverById(userId, driverId, {
+          score: newScore
+        })
+      });
+  }
 }
 
 module.exports = new DriverService();

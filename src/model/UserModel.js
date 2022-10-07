@@ -29,6 +29,14 @@ User.init({
   password: {
     type: DataTypes.STRING,
     allowNull: false
+  },
+  score: {
+    type: DataTypes.JSON,
+    defaultValue: {
+      numberOfScores: 0,
+      totalScore: 0
+    },
+    allowNull: true
   }
 }, { tableName: 'user', timestamps: false, sequelize: getSequelizeInstance() });
 

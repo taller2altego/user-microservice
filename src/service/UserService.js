@@ -98,6 +98,22 @@ class UserService {
       name: "FACU123"
     });
   }
+  
+  addUserScoreById(id, score) {
+    return this.findUserById(id)
+      .then((user) => {
+        const oldNumberOfScores = user.score.numberOfScores;
+        const oldtotalScore = user.score.totalScore;
+        const newScore = {
+          numberOfScores: oldNumberOfScores + 1,
+          totalScore: (oldtotalScore * oldNumberOfScores + score) / (oldNumberOfScores + 1)
+        };
+
+        return UserRepository.patchById(id, {
+          score: newScore
+        })
+      });
+  }
 }
 
 module.exports = new UserService();

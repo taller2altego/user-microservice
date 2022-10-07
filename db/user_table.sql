@@ -4,7 +4,8 @@ CREATE TABLE "user"(
     lastname VARCHAR(50) NOT NULL,
     phone_number INTEGER NOT NULL,
     email VARCHAR(50) UNIQUE NOT NULL,
-    password VARCHAR(50) NOT NULL
+    password VARCHAR(50) NOT NULL,
+    score JSON NOT NULL
 );
 
 CREATE TABLE "driver"(
@@ -13,4 +14,5 @@ CREATE TABLE "driver"(
     license VARCHAR(50) NOT NULL,
     model VARCHAR(50) NOT NULL,
     license_plate VARCHAR(50) NOT NULL
+    score JSON NOT NULL
 );

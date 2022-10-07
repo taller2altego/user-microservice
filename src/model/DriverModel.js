@@ -24,6 +24,14 @@ Driver.init({
   licensePlate: {
     type: DataTypes.INTEGER,
     allowNull: false
+  },
+  score: {
+    type: DataTypes.JSON,
+    defaultValue: {
+      numberOfScores: 0,
+      totalScore: 0
+    },
+    allowNull: true
   }
 }, { tableName: 'driver', timestamps: false, sequelize: getSequelizeInstance() });
 

@@ -132,6 +132,22 @@ class UserController {
         next();
       });
   }
+
+  async addUserScoreById(req, res, next) {
+    return UserService.addUserScoreById(req.params.id, req.body.score)
+      .then(() => {
+        res.customResponse = { statusCode: 204 };
+        next();
+      })
+      .catch((err) => {
+        if (err.statusCode === undefined) {
+          res.customResponse = { statusCode: 500, message: 'Unexpected Error' };
+        } else {
+          res.customResponse = { statusCode: err.statusCode, message: err.message };
+        }
+        next();
+      });
+  }
 }
 
 module.exports = new UserController();
