@@ -1,6 +1,7 @@
 const { Model, DataTypes } = require('sequelize');
-
 const sequelizeInstance = require('../sequelize').getSequelizeInstance();
+
+const DriverModel = require('./DriverModel');
 
 class User extends Model { }
 
@@ -39,6 +40,8 @@ User.init({
     allowNull: true
   }
 }, { tableName: 'user', timestamps: false, sequelize: getSequelizeInstance() });
+
+User.hasMany(DriverModel, { as: 'isDriver' });
 
 /**
  * Function to retrive the sequelize instance.

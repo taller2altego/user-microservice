@@ -49,6 +49,12 @@ class UserService {
 
   findUserById(id) {
     return UserRepository.findById(id)
+      .then(response => {
+        if (response === null) {
+          return buildError(userNotFound);
+        }
+        return response;
+      })
       .catch((err) => {
         return buildError(userNotFound);
       });
@@ -98,7 +104,7 @@ class UserService {
       name: "FACU123"
     });
   }
-  
+
   addUserScoreById(id, score) {
     return this.findUserById(id)
       .then((user) => {

@@ -1,9 +1,9 @@
+const logger = require('../../../winston');
 const DriverService = require('../../service/DriverService');
 const handlerError = require('../../utils/handlerError');
 
 class DriverController {
   associateDriverToUser(req, res, next) {
-    console.log('aca');
     return DriverService.associateDriverToUser(req.body, req.params.userId)
       .then(user => {
         const { password, ...response } = user;
@@ -36,6 +36,7 @@ class DriverController {
         next();
       })
       .catch(err => {
+        logger.error(err);
         res.customResponse = handlerError(err);
         next();
       });

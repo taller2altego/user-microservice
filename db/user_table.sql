@@ -13,6 +13,6 @@ CREATE TABLE "driver"(
     user_id INT NOT NULL,
     license VARCHAR(50) NOT NULL,
     model VARCHAR(50) NOT NULL,
-    license_plate VARCHAR(50) NOT NULL
+    license_plate VARCHAR(50) NOT NULL,
     score JSON NOT NULL
 );

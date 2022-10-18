@@ -1,3 +1,4 @@
+const logger = require('../../../winston');
 const UserService = require('../../service/UserService');
 
 class UserController {
@@ -9,6 +10,7 @@ class UserController {
         next();
       })
       .catch((err) => {
+        logger.error(err);
         if (err.statusCode === undefined) {
           res.customResponse = { statusCode: 500, message: 'Unexpected Error' };
         } else {
@@ -19,7 +21,6 @@ class UserController {
   }
 
   async login(req, res, next) {
-    console.log(req.query);
     return UserService.login(req.query)
       .then(users => {
         const data = users.map(({ password, ...r }) => r);
@@ -27,7 +28,7 @@ class UserController {
         next();
       })
       .catch(err => {
-        console.log()
+        logger.error(err);
         res.customResponse = { statusCode: err.statusCode, message: err.message };
         next();
       });
@@ -47,7 +48,6 @@ class UserController {
   }
 
   async findUserById(req, res, next) {
-    console.log(req);
     return UserService.findUserById(req.params.id)
       .then(user => {
         const { password, ...response } = user;
@@ -55,7 +55,7 @@ class UserController {
         next();
       })
       .catch((err) => {
-        console.log(err);
+        logger.error(err);
         if (err.statusCode === undefined) {
           res.customResponse = { statusCode: 500, message: 'Unexpected Error' };
         } else {
@@ -66,7 +66,6 @@ class UserController {
   }
 
   async verifyUserByEmail(req, res, next) {
-    console.log(req);
     return UserService.verifyUserByEmail(req.body.email)
       .then(() => {
         res.customResponse = { statusCode: 200 };

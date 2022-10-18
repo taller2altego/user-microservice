@@ -1,4 +1,5 @@
 const UserModel = require('../model/UserModel');
+const DriverModel = require('../model/DriverModel');
 
 class UserRepository {
   constructor() { }
@@ -22,8 +23,9 @@ class UserRepository {
 
   findById(id) {
     return UserModel
-      .findByPk(id)
-      .then(user => user.toJSON());
+      .findByPk(id, { include: [{ model: DriverModel, as: 'isDriver', required: false }] })
+      .then(user => user ? user.toJSON() : null)
+      .then(user => user ? ({ ...user, isDriver: user.isDriver.length > 0 }) : null);
   }
 
   findUserByEmail(email) {
