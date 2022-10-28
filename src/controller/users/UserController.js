@@ -42,6 +42,7 @@ class UserController {
         next();
       })
       .catch(err => {
+        logger.error(err);
         res.customResponse = { statusCode: err.statusCode, message: err.message };
         next();
       });
