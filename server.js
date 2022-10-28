@@ -20,6 +20,7 @@ const myStream = {
     logger.info(text);
   }
 };
+
 app.use(morgan('combined', { stream: myStream }));
 
 const swaggerDefinition = {

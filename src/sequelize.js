@@ -9,7 +9,18 @@ function getSequelizeInstance() {
 
   const { logging: level, db } = require('config');
   const Sequelize = require("sequelize");
-  const { host, database, username, port, password } = db;
+
+  console.log('print\n\n\n');
+  console.log(db);
+  console.log(process.env);
+  console.log('fin print\n\n\n');
+
+  const host = process.env.HOST || db.host;
+  const database = process.env.DATABASE || db.database;
+  const username = process.env.USER || db.username;
+  const port = process.env.DBPORT || db.port;
+  const password = process.env.PASSWORD || db.password;
+
   sequelizeInstance = new Sequelize(database, username, password, {
     host,
     port,
