@@ -46,6 +46,6 @@ db.startConfig(app);
 require("./src/routes/UsersRoutes")(app);
 // require("./src/routes/DriverRoutes")(app);
 
-app.listen(5000, () => console.log('is connected'));
+app.listen(process.env.PORT || 5000, () => console.log('is connected'));
 
 module.exports = app;
