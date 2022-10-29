@@ -1,4 +1,4 @@
-CREATE TABLE "user"(
+CREATE TABLE "Users"(
     id SERIAL PRIMARY KEY,
     name VARCHAR(50) NOT NULL,
     lastname VARCHAR(50) NOT NULL,
@@ -8,7 +8,7 @@ CREATE TABLE "user"(
     score JSON NOT NULL
 );
 
-CREATE TABLE "driver"(
+CREATE TABLE "Drivers"(
     id SERIAL PRIMARY KEY,
     user_id INT NOT NULL,
     license VARCHAR(50) NOT NULL,

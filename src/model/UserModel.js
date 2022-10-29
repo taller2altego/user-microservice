@@ -39,7 +39,7 @@ User.init({
     },
     allowNull: true
   }
-}, { tableName: 'user', timestamps: false, sequelize: getSequelizeInstance() });
+}, { tableName: 'Users', timestamps: false, sequelize: getSequelizeInstance() });
 
 User.hasMany(DriverModel, { as: 'isDriver' });
 

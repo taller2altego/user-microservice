@@ -33,7 +33,7 @@ Driver.init({
     },
     allowNull: true
   }
-}, { tableName: 'driver', timestamps: false, sequelize: getSequelizeInstance() });
+}, { tableName: 'Drivers', timestamps: false, sequelize: getSequelizeInstance() });
 
 /**
  * Function to retrive the sequelize instance.
