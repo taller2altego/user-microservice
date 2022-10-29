@@ -10,11 +10,6 @@ function getSequelizeInstance() {
   const { logging: level, db } = require('config');
   const Sequelize = require("sequelize");
 
-  console.log('print\n\n\n');
-  console.log(db);
-  console.log(process.env);
-  console.log('fin print\n\n\n');
-
   const host = process.env.HOST || db.host;
   const database = process.env.DATABASE || db.database;
   const username = process.env.USER || db.username;
@@ -31,8 +26,11 @@ function getSequelizeInstance() {
       freezeTableName: true,
       underscored: true,
     },
-    ssl: {
-      rejectUnauthorized: false
+    dialectOptions: {
+      ssl: {
+        require: true,
+        rejectUnauthorized: false
+      }
     }
   });
 
