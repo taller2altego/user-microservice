@@ -16,6 +16,13 @@ function getSequelizeInstance() {
   const port = process.env.DBPORT || db.port;
   const password = process.env.PASSWORD || db.password;
 
+  const dialectOpt = process.env.NODE_ENV === 'production' ? ({
+    ssl: {
+      require: true,
+      rejectUnauthorized: false
+    }
+  }) : {};
+
   sequelizeInstance = new Sequelize(database, username, password, {
     host,
     port,
@@ -26,12 +33,7 @@ function getSequelizeInstance() {
       freezeTableName: true,
       underscored: true,
     },
-    dialectOptions: {
-      ssl: {
-        require: true,
-        rejectUnauthorized: false
-      }
-    }
+    ...dialectOpt
   });
 
   sequelizeInstance.options.define.underscored = true;
