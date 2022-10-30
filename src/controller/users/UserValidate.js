@@ -1,4 +1,5 @@
 const Ajv = require('ajv');
+const logger = require('../../../winston');
 const ajv = new Ajv({ allErrors: false, messages: true });
 const schema = {
   type: 'object',
@@ -7,7 +8,8 @@ const schema = {
     'lastname',
     'phoneNumber',
     'email',
-    'password'
+    'password',
+    'role'
   ],
   properties: {
     name: {
@@ -47,6 +49,9 @@ const schema = {
       errorMessage: {
         type: 'password must be a string'
       },
+    },
+    role: {
+      enum: ['admin', 'user', 'driver']
     }
   },
   additionalProperties: false
@@ -56,7 +61,7 @@ const validateUser = (req, res, next) => {
   const validate = ajv.compile(schema);
   const valid = validate(req.body);
   if (!valid) {
-    console.log(validate.errors);
+    logger.error(JSON.stringify(validate, undefined, 2));
     res.status(404).send({ message: validate.errors[0].message });
     return;
   }

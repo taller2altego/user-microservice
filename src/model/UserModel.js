@@ -11,6 +11,10 @@ User.init({
     autoIncrement: true,
     primaryKey: true
   },
+  roleId: {
+    type: DataTypes.INTEGER,
+    allowNull: false
+  },
   name: {
     type: DataTypes.STRING,
     allowNull: false
@@ -31,13 +35,15 @@ User.init({
     type: DataTypes.STRING,
     allowNull: false
   },
-  score: {
-    type: DataTypes.JSON,
-    defaultValue: {
-      numberOfScores: 0,
-      totalScore: 0
-    },
-    allowNull: true
+  numberOfScores: {
+    type: DataTypes.INTEGER,
+    defaultValue: 0,
+    allowNull: false
+  },
+  totalScore: {
+    type: DataTypes.INTEGER,
+    defaultValue: 0,
+    allowNull: false
   }
 }, { tableName: 'Users', timestamps: false, sequelize: getSequelizeInstance() });
 

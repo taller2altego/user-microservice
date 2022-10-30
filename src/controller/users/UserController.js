@@ -3,14 +3,14 @@ const UserService = require('../../service/UserService');
 
 class UserController {
   signUp(req, res, next) {
-    return UserService.signUp(req.body, req.params.id)
+    return UserService.signUp(req.body)
       .then(user => {
         const { password, ...response } = user;
         res.customResponse = { statusCode: 201, ...response };
         next();
       })
       .catch((err) => {
-        logger.error(err);
+        logger.error(JSON.stringify(err));
         if (err.statusCode === undefined) {
           res.customResponse = { statusCode: 500, message: 'Unexpected Error' };
         } else {
@@ -21,14 +21,14 @@ class UserController {
   }
 
   async login(req, res, next) {
+    logger.info(JSON.stringify(req.query, undefined, 2));
     return UserService.login(req.query)
-      .then(users => {
-        const data = users.map(({ password, ...r }) => r);
+      .then(({ password, ...data }) => {
         res.customResponse = { statusCode: 200, data };
         next();
       })
       .catch(err => {
-        logger.error(err);
+        logger.error(JSON.stringify(err));
         res.customResponse = { statusCode: err.statusCode, message: err.message };
         next();
       });
@@ -42,7 +42,7 @@ class UserController {
         next();
       })
       .catch(err => {
-        logger.error(err);
+        logger.error(JSON.stringify(err));
         res.customResponse = { statusCode: err.statusCode, message: err.message };
         next();
       });
@@ -56,7 +56,7 @@ class UserController {
         next();
       })
       .catch((err) => {
-        logger.error(err);
+        logger.error(JSON.stringify(err));
         if (err.statusCode === undefined) {
           res.customResponse = { statusCode: 500, message: 'Unexpected Error' };
         } else {
@@ -73,7 +73,7 @@ class UserController {
         next();
       })
       .catch((err) => {
-        console.log(err);
+        logger.error(JSON.stringify(err));
         if (err.statusCode === undefined) {
           res.customResponse = { statusCode: 500, message: 'Unexpected Error' };
         } else {
@@ -92,6 +92,7 @@ class UserController {
         next();
       })
       .catch((err) => {
+        logger.error(JSON.stringify(err));
         if (err.statusCode === undefined) {
           res.customResponse = { statusCode: 500, message: 'Unexpected Error' };
         } else {
@@ -108,6 +109,7 @@ class UserController {
         next();
       })
       .catch((err) => {
+        logger.error(JSON.stringify(err));
         if (err.statusCode === undefined) {
           res.customResponse = { statusCode: 500, message: 'Unexpected Error' };
         } else {
@@ -124,6 +126,7 @@ class UserController {
         next();
       })
       .catch((err) => {
+        logger.error(JSON.stringify(err));
         if (err.statusCode === undefined) {
           res.customResponse = { statusCode: 500, message: 'Unexpected Error' };
         } else {
@@ -140,6 +143,7 @@ class UserController {
         next();
       })
       .catch((err) => {
+        logger.error(JSON.stringify(err));
         if (err.statusCode === undefined) {
           res.customResponse = { statusCode: 500, message: 'Unexpected Error' };
         } else {
