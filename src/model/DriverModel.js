@@ -25,13 +25,15 @@ Driver.init({
     type: DataTypes.INTEGER,
     allowNull: false
   },
-  score: {
-    type: DataTypes.JSON,
-    defaultValue: {
-      numberOfScores: 0,
-      totalScore: 0
-    },
-    allowNull: true
+  numberOfScores: {
+    type: DataTypes.INTEGER,
+    defaultValue: 0,
+    allowNull: false
+  },
+  totalScore: {
+    type: DataTypes.INTEGER,
+    defaultValue: 0,
+    allowNull: false
   }
 }, { tableName: 'Drivers', timestamps: false, sequelize: getSequelizeInstance() });
 

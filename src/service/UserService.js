@@ -1,43 +1,40 @@
 const UserRepository = require('../repository/UserRepository');
-const { errors } = require("config");
-const logger = require('../../winston');
 const {
-  userNotFound,
-  wrongPassword,
-  userAlreadyExists,
-  unableToMatchEmail
-} = errors;
-
-const buildError = (objectMessage) => {
-  const err = new Error();
-  err.statusCode = objectMessage.statusCode;
-  err.message = objectMessage.message;
-  throw err;
-};
+  InvalidRequestor,
+  UserAlreadyExists,
+  UserNotFound,
+  WrongPassword,
+  UnableToMatchEmail
+} = require('../utils/errors');
+const { parseRoleId, isSuperadmin } = require('../utils/parsing');
 
 class UserService {
   async signUp(body) {
     return UserRepository.findUserByEmail(body.email)
       .then(user => {
-        logger.debug(typeof (user));
         if (user === null) {
-          return UserRepository.signUp(body);
+          return UserRepository.signUp(body)
+            .then(res => {
+              return parseRoleId(res);
+            });
         }
-        buildError(userAlreadyExists);
+        throw new UserAlreadyExists();
       });
   }
 
   async login(queryParams) {
-    console.log(queryParams);
-    return this
-      .findAllUsers(queryParams)
-      .then(response => {
-        console.log(response);
-        if (!response.length) {
-          return buildError(userNotFound);
-        } else if (response[0].password != queryParams.password) {
-          return buildError(wrongPassword);
+    return UserRepository
+      .findUserByEmail(queryParams.email)
+      .then(user => {
+        if (user === null) {
+          throw new UserNotFound();
+        } else if (user.password != queryParams.password) {
+          throw new WrongPassword();
         } else {
+          const isSuperadmin = user.roleId === 1;
+          const isAdmin = user.roleId === 1 || user.roleId === 2;
+          const response = { ...user, isAdmin, isSuperadmin };
+          delete response.roleId;
           return response;
         }
       });
@@ -51,24 +48,25 @@ class UserService {
     return UserRepository.findById(id)
       .then(response => {
         if (response === null) {
-          return buildError(userNotFound);
+          throw new UserNotFound();
         }
         return response;
       })
       .catch((err) => {
-        return buildError(userNotFound);
+        throw new UserNotFound();
       });
   }
 
   verifyUserByEmail(email) {
-    return UserRepository.findUserByEmail(email)
+    return UserRepository
+      .findUserByEmail(email)
       .then((user) => {
         if (user === null) {
-          return buildError(userNotFound)
+          throw new UserNotFound();
         }
       })
       .catch(() => {
-        return buildError(userNotFound);
+        throw new UserNotFound();
       });
   }
 
@@ -79,22 +77,13 @@ class UserService {
       });
   }
 
-  patchUserByEmail(email, body) {
-    return UserRepository.findUserByEmail(email)
-      .then(() => {
-        return UserRepository.patchByEmail(email, body);
-      });
-  }
-
   removeUserById(id, email) {
     return this.findUserById(id)
       .then((user) => {
-        console.log(email);
-        console.log(user);
         if (email === user.email) {
           return UserRepository.removeById(id);
         }
-        return buildError(unableToMatchEmail);
+        throw new UnableToMatchEmail();
       });
   }
 
