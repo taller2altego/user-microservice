@@ -24,8 +24,8 @@ class DriverService {
     return DriverRepository.findAll();
   }
 
-  findDriverById(userId, driverId) {
-    return DriverRepository.findById(userId, driverId)
+  findDriverById(driverId) {
+    return DriverRepository.findById(driverId)
       .then(driver => {
         console.log(driver);
         if (driver === null) {
@@ -35,12 +35,12 @@ class DriverService {
       });
   }
 
-  patchDriverById(userId, driverId, body) {
-    return this.findDriverById(userId, driverId).then(() => DriverRepository.patchById(driverId, body));
+  patchDriverById(driverId, body) {
+    return this.findDriverById(driverId).then(() => DriverRepository.patchById(driverId, body));
   }
 
-  removeDriverById(userId, driverId) {
-    return this.findDriverById(userId, driverId).then(() => DriverRepository.removeById(driverId));
+  removeDriverById(driverId) {
+    return this.findDriverById(driverId).then(() => DriverRepository.removeById(driverId));
   }
 
   addDriverScoreById(id, score) {

@@ -45,7 +45,7 @@ app.get("/", (req, res) => {
 const db = require("./src/sequelize");
 db.startConfig(app);
 require("./src/routes/UsersRoutes")(app);
-// require("./src/routes/DriverRoutes")(app);
+require("./src/routes/DriverRoutes")(app);
 
 app.listen(process.env.PORT || 5000, () => console.log('is connected'));
 

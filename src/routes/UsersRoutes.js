@@ -40,11 +40,5 @@ module.exports = app => {
   router.post('/changePassword', user.changePasswordByEmail, handlerResponse); // endpoint innecesario, está el put de users.
   router.post('/:userId/driver/:driverId/score', driverController.addDriverScoreById, handlerResponse); // endpoint innecesario, es un put.
 
-  // aún no tienen validaciones.
   router.post('/:userId/driver', validateDriver, driverController.associateDriverToUser, handlerResponse);
-  router.get('/:userId/driver', driverController.findAllDrivers, handlerResponse);
-  router.get('/:userId/driver/:driverId', driverController.findDriverById, handlerResponse);
-  router.patch('/:userId/driver/:driverId', driverController.patchDriverById, handlerResponse);
-  router.delete('/:userId/driver/:driverId', driverController.removeDriverById, handlerResponse);
-
 };
