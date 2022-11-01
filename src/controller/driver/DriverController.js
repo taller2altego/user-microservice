@@ -66,18 +66,6 @@ class DriverController {
         next();
       });
   }
-
-  async addDriverScoreById(req, res, next) {
-    return DriverService.addDriverScoreById(req.params.userId, req.params.driverId, req.body.score)
-    .then(() => {
-      res.customResponse = { statusCode: 204 };
-      next();
-    })
-    .catch(err => {
-      res.customResponse = handlerError(err);
-      next();
-    });
-  }
 }
 
 module.exports = new DriverController();

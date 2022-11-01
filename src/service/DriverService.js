@@ -36,26 +36,22 @@ class DriverService {
   }
 
   patchDriverById(userId, driverId, body) {
+    if (body.score) {
+      return this.findDriverById(userId, driverId).then((driver) => {
+        const oldNumberOfScores = driver.numberOfScores;
+        const oldtotalScore = driver.totalScore;
+        const newScore = {
+          numberOfScores: oldNumberOfScores + 1,
+          totalScore: (oldtotalScore * oldNumberOfScores + body.score) / (oldNumberOfScores + 1)
+        };
+        return DriverRepository.patchById(driverId, newScore);
+      });
+    }
     return this.findDriverById(userId, driverId).then(() => DriverRepository.patchById(driverId, body));
   }
 
   removeDriverById(userId, driverId) {
     return this.findDriverById(userId, driverId).then(() => DriverRepository.removeById(driverId));
-  }
-
-  addDriverScoreById(id, score) {
-    return this.findDriverById(userId, driverId)
-      .then((user) => {
-        const oldNumberOfScores = driver.score.numberOfScores;
-        const oldtotalScore = driver.score.totalScore;
-        const newScore = {
-          numberOfScores: oldNumberOfScores + 1,
-          totalScore: (oldtotalScore * oldNumberOfScores + score) / (oldNumberOfScores + 1)
-        };
-        return DriverRepository.patchDriverById(userId, driverId, {
-          score: newScore
-        })
-      });
   }
 }
 
