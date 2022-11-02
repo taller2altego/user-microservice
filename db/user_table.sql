@@ -7,7 +7,8 @@ CREATE TABLE "Users"(
     email VARCHAR(50) UNIQUE NOT NULL,
     password VARCHAR(50) NOT NULL,
     number_of_scores INT NOT NULL,
-    total_score INT NOT NULL
+    total_score INT NOT NULL,
+    created_at date NOT NULL
 );
 
 CREATE TABLE "Drivers"(

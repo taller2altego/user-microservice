@@ -21,7 +21,7 @@ module.exports = {
 
     await queryInterface.bulkInsert('Roles', roles);
 
-    await queryInterface.bulkInsert('Users', [{
+    const superadminUser = {
       name: 'superadmin',
       lastname: 'superadmin',
       phone_number: 123,
@@ -29,10 +29,11 @@ module.exports = {
       password: '1234',
       role_id: 1,
       number_of_scores: 0,
-      total_score: 0
-    }]);
+      total_score: 0,
+      created_at: '2020-10-10'
+    };
 
-    await queryInterface.bulkInsert('Users', [{
+    const adminUser = {
       name: 'admin',
       lastname: 'admin',
       phone_number: 123,
@@ -40,10 +41,11 @@ module.exports = {
       password: '1234',
       role_id: 2,
       number_of_scores: 0,
-      total_score: 0
-    }]);
+      total_score: 0,
+      created_at: '2020-10-10'
+    };
 
-    await queryInterface.bulkInsert('Users', [{
+    const user = {
       name: 'user',
       lastname: 'user',
       phone_number: 123,
@@ -51,10 +53,11 @@ module.exports = {
       password: '1234',
       role_id: 3,
       number_of_scores: 0,
-      total_score: 0
-    }]);
+      total_score: 0,
+      created_at: '2020-10-10'
+    };
 
-    await queryInterface.bulkInsert('Users', [{
+    const driver = {
       name: 'driver',
       lastname: 'driver',
       phone_number: 123,
@@ -62,8 +65,11 @@ module.exports = {
       password: '1234',
       role_id: 4,
       number_of_scores: 0,
-      total_score: 0
-    }]);
+      total_score: 0,
+      created_at: '2020-10-10'
+    };
+
+    await queryInterface.bulkInsert('Users', [superadminUser, adminUser, user, driver]);
   },
 
   async down(queryInterface, Sequelize) {
