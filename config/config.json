@@ -1,0 +1,30 @@
+{
+  "development": {
+    "host": "userdb_microservice",
+    "database": "users",
+    "username": "user",
+    "port": "5432",
+    "password": "password",
+    "dialect": "postgres"
+  },
+  "production": {
+    "username": "afmvangdoosqnp",
+    "password": "47096aef941221e7cf6f08feff3489f4b4c2935968aba30c929306f28f2dab24",
+    "database": "dcmd8l0dpl2oon",
+    "host": "ec2-54-160-200-167.compute-1.amazonaws.com",
+    "port": "5432",
+    "dialect": "postgres",
+    "operatorsAliases": false,
+    "logging": "debug",
+    "define": {
+      "freezeTableName": true,
+      "underscored": true
+    },
+    "dialectOptions": {
+      "ssl": {
+        "require": true,
+        "rejectUnauthorized": false
+      }
+    }
+  }
+}
