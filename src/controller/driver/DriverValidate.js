@@ -41,7 +41,6 @@ const validateDriver = (req, res, next) => {
   const validate = ajv.compile(schema);
   const valid = validate(req.body);
   if (!valid) {
-    console.log(validate.errors);
     res.status(404).send({ message: validate.errors[0].message });
     return;
   }

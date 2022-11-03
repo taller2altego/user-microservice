@@ -27,7 +27,6 @@ class DriverService {
   findDriverById(userId, driverId) {
     return DriverRepository.findById(userId, driverId)
       .then(driver => {
-        console.log(driver);
         if (driver === null) {
           buildError(driverNotFound);
         }
