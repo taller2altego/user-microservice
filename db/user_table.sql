@@ -20,6 +20,12 @@ CREATE TABLE "Drivers"(
     total_score INT NOT NULL
 );
 
+CREATE TABLE "Reports"(
+    id SERIAL PRIMARY KEY,
+    driverId INT NOT NULL,
+    description VARCHAR(500) NOT NULL
+);
+
 CREATE TABLE "Roles"(
     id SERIAL PRIMARY KEY,
     name VARCHAR(50) NOT NULL,
