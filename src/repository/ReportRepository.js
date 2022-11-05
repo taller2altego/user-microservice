@@ -6,13 +6,13 @@ class ReportRepository {
   createReport(body) {
     return ReportModel
       .create(body)
-      .then(user => user.toJSON());
+      .then(report => report.toJSON());
   }
 
   findAll() {
     return ReportModel
       .findAll()
-      .then(reports => reports.map(report => report.toJSON()));
+      .then((reports) => reports.map(report => report.toJSON()))
   }
 }
 

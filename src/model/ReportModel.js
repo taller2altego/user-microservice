@@ -2,16 +2,17 @@ const { Model, DataTypes } = require('sequelize');
 
 const sequelizeInstance = require('../sequelize').getSequelizeInstance();
 
-class Reports extends Model { }
+class Report extends Model { }
 
-Reports.init({
+Report.init({
   id: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
     primaryKey: true
   },
   driverId: {
-    type: DataTypes.INTEGER
+    type: DataTypes.INTEGER,
+    allowNull: false
   },
   description: {
     type: DataTypes.STRING,
@@ -27,4 +28,4 @@ function getSequelizeInstance() {
   return sequelizeInstance;
 }
 
-module.exports = Reports;
+module.exports = Report;
