@@ -22,7 +22,7 @@ CREATE TABLE "Drivers"(
 
 CREATE TABLE "Reports"(
     id SERIAL PRIMARY KEY,
-    driverId INT NOT NULL,
+    driver_id INT NOT NULL,
     description VARCHAR(500) NOT NULL
 );
 
