@@ -1,11 +1,3 @@
-class InvalidRequestor extends Error {
-  constructor(message = 'Requestor should be superadmin', code = 401) {
-    super();
-    this.message = message;
-    this.statusCode = code;
-  }
-}
-
 class UserAlreadyExists extends Error {
   constructor(message = 'El usuario ya existe', code = 403) {
     super();
@@ -38,4 +30,12 @@ class UnableToMatchEmail extends Error {
   }
 }
 
-module.exports = { InvalidRequestor, UserAlreadyExists, UserNotFound, WrongPassword, UnableToMatchEmail };
+class BlockedAccount extends Error {
+  constructor(message = 'La cuenta ha sido bloqueada', code = 403) {
+    super();
+    this.message = message;
+    this.statusCode = code;
+  }
+}
+
+module.exports = { UserAlreadyExists, UserNotFound, WrongPassword, UnableToMatchEmail, BlockedAccount };

@@ -30,6 +30,7 @@ module.exports = {
       role_id: 1,
       number_of_scores: 0,
       total_score: 0,
+      is_blocked: false,
       created_at: '2020-10-10'
     };
 
@@ -42,6 +43,7 @@ module.exports = {
       role_id: 2,
       number_of_scores: 0,
       total_score: 0,
+      is_blocked: false,
       created_at: '2020-10-10'
     };
 
@@ -54,6 +56,20 @@ module.exports = {
       role_id: 3,
       number_of_scores: 0,
       total_score: 0,
+      is_blocked: false,
+      created_at: '2020-10-10'
+    };
+
+    const blockedUser = {
+      name: 'user',
+      lastname: 'blocked',
+      phone_number: 123,
+      email: 'blockeduser@fiuber.com',
+      password: '1234',
+      role_id: 3,
+      number_of_scores: 0,
+      total_score: 0,
+      is_blocked: true,
       created_at: '2020-10-10'
     };
 
@@ -66,10 +82,21 @@ module.exports = {
       role_id: 4,
       number_of_scores: 0,
       total_score: 0,
+      is_blocked: false,
       created_at: '2020-10-10'
     };
 
-    await queryInterface.bulkInsert('Users', [superadminUser, adminUser, user, driver]);
+    await queryInterface.bulkInsert('Users', [superadminUser, adminUser, user, blockedUser, driver]);
+
+    const isDriver = {
+      user_id: 5, 
+      license: 'asd', 
+      model: 'das', 
+      license_plate: 'dsa', 
+      number_of_scores: 0,
+      total_score: 0
+    };
+    await queryInterface.bulkInsert('Drivers', [isDriver]);
   },
 
   async down(queryInterface, Sequelize) {

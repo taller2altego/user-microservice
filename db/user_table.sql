@@ -8,6 +8,7 @@ CREATE TABLE "Users"(
     password VARCHAR(50) NOT NULL,
     number_of_scores INT NOT NULL,
     total_score INT NOT NULL,
+    is_blocked BOOLEAN NOT NULL,
     created_at date NOT NULL
 );
 

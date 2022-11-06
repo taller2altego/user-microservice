@@ -49,7 +49,6 @@ class DriverController {
         next();
       })
       .catch(err => {
-        console.log(err);
         res.customResponse = handlerError(err);
         next();
       });
