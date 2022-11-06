@@ -7,6 +7,12 @@ const schema = {
     'description'
   ],
   properties: {
+    userId: {
+      type: 'integer',
+      errorMessage: {
+        type: 'user id must be an integer'
+      }
+    },
     driverId: {
       type: 'integer',
       errorMessage: {

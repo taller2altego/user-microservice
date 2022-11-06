@@ -22,6 +22,7 @@ CREATE TABLE "Drivers"(
 
 CREATE TABLE "Reports"(
     id SERIAL PRIMARY KEY,
+    user_id INT NOT NULL,
     driver_id INT NOT NULL,
     description VARCHAR(500) NOT NULL
 );
