@@ -83,8 +83,6 @@ class UserController {
       });
   }
 
-
-
   async patchUserById(req, res, next) {
     return UserService.patchUserById(req.params.id, req.body)
       .then(() => {
@@ -121,23 +119,6 @@ class UserController {
 
   async changePasswordByEmail(req, res, next) {
     return UserService.changePasswordByEmail(req.body.email, req.body.newPassword)
-      .then(() => {
-        res.customResponse = { statusCode: 204 };
-        next();
-      })
-      .catch((err) => {
-        logger.error(JSON.stringify(err));
-        if (err.statusCode === undefined) {
-          res.customResponse = { statusCode: 500, message: 'Unexpected Error' };
-        } else {
-          res.customResponse = { statusCode: err.statusCode, message: err.message };
-        }
-        next();
-      });
-  }
-
-  async addUserScoreById(req, res, next) {
-    return UserService.addUserScoreById(req.params.id, req.body.score)
       .then(() => {
         res.customResponse = { statusCode: 204 };
         next();

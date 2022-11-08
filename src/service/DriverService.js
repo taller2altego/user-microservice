@@ -24,8 +24,8 @@ class DriverService {
     return DriverRepository.findAll();
   }
 
-  findDriverById(userId, driverId) {
-    return DriverRepository.findById(userId, driverId)
+  findDriverById(driverId) {
+    return DriverRepository.findById(driverId)
       .then(driver => {
         if (driver === null) {
           buildError(driverNotFound);
@@ -34,27 +34,23 @@ class DriverService {
       });
   }
 
-  patchDriverById(userId, driverId, body) {
-    return this.findDriverById(userId, driverId).then(() => DriverRepository.patchById(driverId, body));
-  }
-
-  removeDriverById(userId, driverId) {
-    return this.findDriverById(userId, driverId).then(() => DriverRepository.removeById(driverId));
-  }
-
-  addDriverScoreById(id, score) {
-    return this.findDriverById(userId, driverId)
-      .then((user) => {
-        const oldNumberOfScores = driver.score.numberOfScores;
-        const oldtotalScore = driver.score.totalScore;
+  patchDriverById(driverId, body) {
+    if (body.score) {
+      return this.findDriverById(driverId).then((driver) => {
+        const oldNumberOfScores = driver.numberOfScores;
+        const oldtotalScore = driver.totalScore;
         const newScore = {
           numberOfScores: oldNumberOfScores + 1,
-          totalScore: (oldtotalScore * oldNumberOfScores + score) / (oldNumberOfScores + 1)
+          totalScore: (oldtotalScore * oldNumberOfScores + body.score) / (oldNumberOfScores + 1)
         };
-        return DriverRepository.patchDriverById(userId, driverId, {
-          score: newScore
-        })
+        return DriverRepository.patchById(driverId, newScore);
       });
+    }
+    return this.findDriverById(driverId).then(() => DriverRepository.patchById(driverId, body));
+  }
+
+  removeDriverById(driverId) {
+    return this.findDriverById(driverId).then(() => DriverRepository.removeById(driverId));
   }
 }
 

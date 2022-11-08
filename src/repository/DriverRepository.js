@@ -15,9 +15,9 @@ class DriverRepository {
       .then(drivers => drivers.map(driver => driver.toJSON()));
   }
 
-  findById(userId, driverId) {
+  findById(driverId) {
     return DriverModel
-      .findOne({ where: { id: driverId, userId } })
+      .findOne({ where: { id: driverId } })
       .then(driver => driver ? driver.toJSON() : null);
   }
 
