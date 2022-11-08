@@ -1,12 +1,12 @@
 const UserRepository = require('../repository/UserRepository');
 const {
-  InvalidRequestor,
   UserAlreadyExists,
   UserNotFound,
   WrongPassword,
-  UnableToMatchEmail
+  UnableToMatchEmail,
+  BlockedAccount
 } = require('../utils/errors');
-const { parseRoleId, isSuperadmin } = require('../utils/parsing');
+const { parseRoleId } = require('../utils/parsing');
 
 class UserService {
   async signUp(body) {
@@ -30,6 +30,8 @@ class UserService {
           throw new UserNotFound();
         } else if (user.password != queryParams.password) {
           throw new WrongPassword();
+        } else if (user.isBlocked === true) {
+          throw new BlockedAccount();
         } else {
           const isSuperadmin = user.roleId === 1;
           const isAdmin = user.roleId === 1 || user.roleId === 2;
@@ -41,7 +43,9 @@ class UserService {
   }
 
   findAllUsers(queryParams) {
-    return UserRepository.findAll(queryParams);
+    return UserRepository
+      .findAll(queryParams)
+      .then(data => data.map(row => parseRoleId(row)));
   }
 
   findUserById(id) {
@@ -50,9 +54,9 @@ class UserService {
         if (response === null) {
           throw new UserNotFound();
         }
-        return response;
+        return parseRoleId(response);
       })
-      .catch((err) => {
+      .catch(() => {
         throw new UserNotFound();
       });
   }

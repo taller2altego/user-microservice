@@ -5,6 +5,7 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
+    "docker-start": "nodemon -L --inspect=0.0.0.0 server.js",
     "docker-up": "docker-compose up --build -d",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

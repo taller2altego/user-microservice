@@ -44,6 +44,16 @@ User.init({
     type: DataTypes.INTEGER,
     defaultValue: 0,
     allowNull: false
+  },
+  isBlocked: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false,
+    allowNull: false
+  },
+  createdAt: {
+    type: DataTypes.DATE,
+    required: true,
+    defaultValue: new Date()
   }
 }, { tableName: 'Users', timestamps: false, sequelize: getSequelizeInstance() });
 

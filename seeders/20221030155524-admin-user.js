@@ -21,7 +21,7 @@ module.exports = {
 
     await queryInterface.bulkInsert('Roles', roles);
 
-    await queryInterface.bulkInsert('Users', [{
+    const superadminUser = {
       name: 'superadmin',
       lastname: 'superadmin',
       phone_number: 123,
@@ -29,10 +29,12 @@ module.exports = {
       password: '1234',
       role_id: 1,
       number_of_scores: 0,
-      total_score: 0
-    }]);
+      total_score: 0,
+      is_blocked: false,
+      created_at: '2020-10-10'
+    };
 
-    await queryInterface.bulkInsert('Users', [{
+    const adminUser = {
       name: 'admin',
       lastname: 'admin',
       phone_number: 123,
@@ -40,10 +42,12 @@ module.exports = {
       password: '1234',
       role_id: 2,
       number_of_scores: 0,
-      total_score: 0
-    }]);
+      total_score: 0,
+      is_blocked: false,
+      created_at: '2020-10-10'
+    };
 
-    await queryInterface.bulkInsert('Users', [{
+    const user = {
       name: 'user',
       lastname: 'user',
       phone_number: 123,
@@ -51,10 +55,25 @@ module.exports = {
       password: '1234',
       role_id: 3,
       number_of_scores: 0,
-      total_score: 0
-    }]);
+      total_score: 0,
+      is_blocked: false,
+      created_at: '2020-10-10'
+    };
 
-    await queryInterface.bulkInsert('Users', [{
+    const blockedUser = {
+      name: 'user',
+      lastname: 'blocked',
+      phone_number: 123,
+      email: 'blockeduser@fiuber.com',
+      password: '1234',
+      role_id: 3,
+      number_of_scores: 0,
+      total_score: 0,
+      is_blocked: true,
+      created_at: '2020-10-10'
+    };
+
+    const driver = {
       name: 'driver',
       lastname: 'driver',
       phone_number: 123,
@@ -62,8 +81,22 @@ module.exports = {
       password: '1234',
       role_id: 4,
       number_of_scores: 0,
+      total_score: 0,
+      is_blocked: false,
+      created_at: '2020-10-10'
+    };
+
+    await queryInterface.bulkInsert('Users', [superadminUser, adminUser, user, blockedUser, driver]);
+
+    const isDriver = {
+      user_id: 5, 
+      license: 'asd', 
+      model: 'das', 
+      license_plate: 'dsa', 
+      number_of_scores: 0,
       total_score: 0
-    }]);
+    };
+    await queryInterface.bulkInsert('Drivers', [isDriver]);
   },
 
   async down(queryInterface, Sequelize) {
