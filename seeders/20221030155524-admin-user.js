@@ -86,7 +86,6 @@ module.exports = {
       created_at: '2020-10-10'
     };
 
-
     await queryInterface.bulkInsert('Users', [superadminUser, adminUser, user, blockedUser, driver]);
 
     const isDriver = {
