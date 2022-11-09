@@ -100,6 +100,25 @@ class UserController {
       });
   }
 
+  async patchUserByEmail(req, res, next) {
+    const email = req.body.email;
+    delete req.body[email];
+    return UserService.patchUserByEmail(email, req.body)
+      .then(() => {
+        res.customResponse = { statusCode: 201 };
+        next();
+      })
+      .catch((err) => {
+        logger.error(JSON.stringify(err));
+        if (err.statusCode === undefined) {
+          res.customResponse = { statusCode: 500, message: 'Unexpected Error' };
+        } else {
+          res.customResponse = { statusCode: err.statusCode, message: err.message };
+        }
+        next();
+      });
+  }
+
   async removeUserById(req, res, next) {
     return UserService.removeUserById(req.params.id, req.body.email)
       .then(() => {

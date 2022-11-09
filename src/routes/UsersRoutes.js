@@ -31,12 +31,9 @@ module.exports = app => {
   router.post('/', logInput, restrictToAdmin('isSuperadmin'), validateUser, parseRole, user.signUp, handlerResponse);
   router.get('/', logInput, restrictToAdmin('isAdmin'), user.findAllUsers, handlerResponse);
   router.get('/:id', logInput, requestValidator('id'), user.findUserById, handlerResponse);
+  router.patch('/', logInput, user.patchUserByEmail, handlerResponse);
   router.patch('/:id', logInput, requestValidator('id'), user.patchUserById, handlerResponse);
-  router.delete('/:id', logInput, requestValidator('id'), user.removeUserById, handlerResponse); // chequear
-
-  // a revisar
-  router.post('/verifyUserByEmail', user.verifyUserByEmail, handlerResponse); // no tiene que ser un post, se esta buscando algo. Endpoint innecesario, está el find de users.
-  router.post('/changePassword', user.changePasswordByEmail, handlerResponse); // endpoint innecesario, está el put de users.
+  router.delete('/:id', logInput, requestValidator('id'), user.removeUserById, handlerResponse);
 
   router.post('/:userId/driver', validateDriver, driverController.associateDriverToUser, handlerResponse);
 };

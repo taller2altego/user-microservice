@@ -92,6 +92,13 @@ class UserService {
       });
   }
 
+  patchUserByEmail(email, body) {
+    return this.verifyUserByEmail(email)
+      .then(() => {
+        return UserRepository.patchByEmail(email, body);
+      });
+  }
+  
   removeUserById(id, email) {
     return this.findUserById(id)
       .then((user) => {
