@@ -22,6 +22,24 @@ class UserService {
       });
   }
 
+  async oauthLogin(queryParams) {
+    return UserRepository
+      .findUserByEmail(queryParams.email)
+      .then(user => {
+        if (user === null) {
+          throw new UserNotFound();
+        } else if (user.isBlocked === true) {
+          throw new BlockedAccount();
+        } else {
+          const isSuperadmin = user.roleId === 1;
+          const isAdmin = user.roleId === 1 || user.roleId === 2;
+          const response = { ...user, isAdmin, isSuperadmin };
+          delete response.roleId;
+          return response;
+        }
+      });
+  }
+
   async login(queryParams) {
     return UserRepository
       .findUserByEmail(queryParams.email)
@@ -98,7 +116,7 @@ class UserService {
         return UserRepository.patchByEmail(email, body);
       });
   }
-  
+
   removeUserById(id, email) {
     return this.findUserById(id)
       .then((user) => {

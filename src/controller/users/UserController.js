@@ -20,7 +20,20 @@ class UserController {
       });
   }
 
-  async login(req, res, next) {
+  oauthLogin(req, res, next) {
+    return UserService.oauthLogin(req.query)
+      .then(({ password, ...data }) => {
+        res.customResponse = { statusCode: 200, data };
+        next();
+      })
+      .catch(err => {
+        logger.error(JSON.stringify(err));
+        res.customResponse = { statusCode: err.statusCode, message: err.message };
+        next();
+      });
+  }
+
+  login(req, res, next) {
     logger.info(JSON.stringify(req.query, undefined, 2));
     return UserService.login(req.query)
       .then(({ password, ...data }) => {

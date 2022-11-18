@@ -5,7 +5,7 @@ CREATE TABLE "Users"(
     lastname VARCHAR(50) NOT NULL,
     phone_number INTEGER NOT NULL,
     email VARCHAR(50) UNIQUE NOT NULL,
-    password VARCHAR(50) NOT NULL,
+    password VARCHAR(50),
     number_of_scores INT NOT NULL,
     total_score INT NOT NULL,
     is_blocked BOOLEAN NOT NULL,
