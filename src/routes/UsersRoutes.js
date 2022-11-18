@@ -1,5 +1,6 @@
 // controllers
 const validateUser = require('../controller/users/UserValidate');
+const oauthValidate = require('../controller/users/OauthValidate');
 const validateDriver = require('../controller/driver/DriverValidate');
 const user = require('../controller/users/UserController');
 const driverController = require('../controller/driver/DriverController');
@@ -27,6 +28,10 @@ module.exports = app => {
   }
 
   app.use('/users', router);
+
+  router.get('/login/oauth', logInput, user.oauthLogin, handlerResponse);
+  router.post('/oauth', logInput, oauthValidate, parseRole, user.signUp, handlerResponse);
+
   router.get('/login', logInput, user.login, handlerResponse);
   router.post('/', logInput, restrictToAdmin('isSuperadmin'), validateUser, parseRole, user.signUp, handlerResponse);
   router.get('/', logInput, restrictToAdmin('isAdmin'), user.findAllUsers, handlerResponse);

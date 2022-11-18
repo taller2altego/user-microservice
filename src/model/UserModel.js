@@ -32,8 +32,7 @@ User.init({
     allowNull: false
   },
   password: {
-    type: DataTypes.STRING,
-    allowNull: false
+    type: DataTypes.STRING
   },
   numberOfScores: {
     type: DataTypes.INTEGER,
