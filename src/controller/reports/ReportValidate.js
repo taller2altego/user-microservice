@@ -36,7 +36,7 @@ const validateReport = (req, res, next) => {
   const valid = validate(req.body);
   if (!valid) {
     console.log(validate.errors);
-    res.status(404).send({ message: validate.errors[0].message });
+    res.status(400).send({ message: validate.errors[0].message });
     return;
   }
   next();
