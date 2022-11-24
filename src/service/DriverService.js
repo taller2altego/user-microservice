@@ -17,6 +17,7 @@ class DriverService {
     if (user === null) {
       buildError(userNotFound);
     }
+    await UserRepository.patchById(userId, { roleId: 4 })
     return DriverRepository.create({ ...body, userId });
   }
 
