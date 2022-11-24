@@ -4,7 +4,7 @@ const handlerError = require('../../utils/handlerError');
 
 class DriverController {
   associateDriverToUser(req, res, next) {
-    return DriverService.associateDriverToUser(req.body)
+    return DriverService.associateDriverToUser(req.body, req.params.userId)
       .then(user => {
         const { password, ...response } = user;
         res.customResponse = { statusCode: 201, ...response };
