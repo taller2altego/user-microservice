@@ -16,15 +16,8 @@ function getSequelizeInstance() {
   const port = process.env.DBPORT || db.port;
   const password = process.env.PASSWORD || db.password;
 
-  console.log(host);
-  console.log(database);
-  console.log(username);
-  console.log(port);
-  console.log(password);
-
   const dialectOpt = process.env.NODE_ENV === 'production' ? ({
     ssl: {
-      require: true,
       rejectUnauthorized: false
     }
   }) : {};
