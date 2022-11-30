@@ -7,7 +7,10 @@
     "start": "node server.js",
     "docker-start": "nodemon -L --inspect=0.0.0.0 server.js",
     "docker-up": "docker-compose up --build -d",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "prepare": "husky install",
+    "lint": "npx eslint ./src/**/**.js",
+    "prettier": "prettier --config .prettierrc --write \"**/*.{js,json,md,sol,ts}\"",
+    "prettier:list-different": "prettier --config .prettierrc --list-different \"**/*.{js,json,md,sol,ts}\""
   },
   "repository": {
     "type": "git",
@@ -38,5 +41,11 @@
     "swagger-jsdoc": "^6.2.5",
     "swagger-ui-express": "^4.5.0",
     "winston": "^3.8.2"
+  },
+  "devDependencies": {
+    "eslint": "^8.28.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.26.0",
+    "husky": "^8.0.2"
   }
 }
