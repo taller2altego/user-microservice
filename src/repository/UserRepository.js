@@ -36,8 +36,7 @@ class UserRepository {
           include: [
             { model: ReportModel, as: 'reports', required: false, attributes: [] }
           ]
-        },
-
+        }
       ],
       group: [Sequelize.col('User.id'), Sequelize.col('drivers.id')]
     };
@@ -47,8 +46,9 @@ class UserRepository {
       .then(user => user ? user.toJSON() : null)
       .then(user => {
         if (user) {
+          const { drivers, ...userData } = user;
           return {
-            ...user,
+            ...userData,
             isDriver: user.drivers.length > 0,
             driverId: user.drivers.length ? user.drivers[0].id : undefined
           };
