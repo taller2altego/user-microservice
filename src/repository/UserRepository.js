@@ -4,8 +4,6 @@ const DriverModel = require('../model/DriverModel');
 const ReportModel = require('../model/ReportModel');
 
 class UserRepository {
-  constructor() { }
-
   signUp(body) {
     return UserModel
       .create({ ...body, isBlocked: false })

@@ -1,11 +1,11 @@
+// modules
+const router = require('express').Router();
+
 // controllers
 const driverController = require('../controller/driver/DriverController');
 
 // utils
 const logger = require('../../winston');
-
-// modules
-const router = require('express').Router();
 
 module.exports = app => {
   const handlerResponse = (req, res) => {

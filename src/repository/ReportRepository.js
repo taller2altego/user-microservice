@@ -1,8 +1,6 @@
 const ReportModel = require('../model/ReportModel');
 
 class ReportRepository {
-  constructor() { }
-
   createReport(body) {
     return ReportModel
       .create(body)

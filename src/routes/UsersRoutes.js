@@ -1,3 +1,6 @@
+// modules
+const router = require('express').Router();
+
 // controllers
 const validateUser = require('../controller/users/UserValidate');
 const oauthValidate = require('../controller/users/OauthValidate');
@@ -10,9 +13,6 @@ const { parseRole } = require('../utils/parsing');
 const restrictToAdmin = require('../utils/restrictToAdmin');
 const requestValidator = require('../utils/requestValidator');
 const logger = require('../../winston');
-
-// modules
-const router = require('express').Router();
 
 module.exports = app => {
   const handlerResponse = (req, res) => {

@@ -1,8 +1,6 @@
 const DriverModel = require('../model/DriverModel');
 
 class DriverRepository {
-  constructor() { }
-
   create(body) {
     return DriverModel
       .create(body)

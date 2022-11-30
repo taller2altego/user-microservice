@@ -1,14 +1,12 @@
+// modules
+const router = require('express').Router();
+
 // controllers
 const validateReport = require('../controller/reports/ReportValidate');
 const reportController = require('../controller/reports/ReportController');
 
 // utils
-const { parseRole } = require('../utils/parsing');
-const restrictToAdmin = require('../utils/restrictToAdmin');
 const logger = require('../../winston');
-
-// modules
-const router = require('express').Router();
 
 module.exports = app => {
   const handlerResponse = (req, res) => {

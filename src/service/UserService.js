@@ -44,7 +44,7 @@ class UserService {
       .then(user => {
         if (user === null) {
           throw new UserNotFound();
-        } else if (user.password != queryParams.password) {
+        } else if (user.password !== queryParams.password) {
           throw new WrongPassword();
         } else if (user.isBlocked === true) {
           throw new BlockedAccount();

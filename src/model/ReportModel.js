@@ -2,6 +2,14 @@ const { Model, DataTypes } = require('sequelize');
 
 const sequelizeInstance = require('../sequelize').getSequelizeInstance();
 
+/**
+ * Function to retrive the sequelize instance.
+ * It's being kept separate for testing purposes.
+ */
+function getSequelizeInstance() {
+  return sequelizeInstance;
+}
+
 class Report extends Model { }
 
 Report.init({
@@ -23,13 +31,5 @@ Report.init({
     allowNull: false
   }
 }, { tableName: 'Reports', timestamps: false, sequelize: getSequelizeInstance() });
-
-/**
- * Function to retrive the sequelize instance.
- * It's being kept separate for testing purposes.
- */
-function getSequelizeInstance() {
-  return sequelizeInstance;
-}
 
 module.exports = Report;
