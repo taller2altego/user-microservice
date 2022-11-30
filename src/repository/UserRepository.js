@@ -11,13 +11,31 @@ class UserRepository {
   }
 
   findAll({ email }) {
-    const where = {};
+    const params = {
+      attributes: {
+        include: [[Sequelize.fn('COUNT', Sequelize.col('drivers.reports.id')), 'reportsCount']]
+      },
+      include: [
+        {
+          model: DriverModel,
+          as: 'drivers',
+          required: false,
+          include: [
+            {
+              model: ReportModel, as: 'reports', required: false, attributes: []
+            }
+          ]
+        }
+      ],
+      group: [Sequelize.col('User.id'), Sequelize.col('drivers.id')]
+    };
+
     if (email) {
-      where.email = email;
+      params.where = { email };
     }
 
     return UserModel
-      .findAll({ where })
+      .findAll(params)
       .then(users => users.map(user => user.toJSON()));
   }
 
