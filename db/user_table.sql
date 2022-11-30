@@ -9,6 +9,7 @@ CREATE TABLE "Users"(
     number_of_scores INT NOT NULL,
     total_score INT NOT NULL,
     is_blocked BOOLEAN NOT NULL,
+    default_address VARCHAR(500),
     created_at date NOT NULL
 );
 
