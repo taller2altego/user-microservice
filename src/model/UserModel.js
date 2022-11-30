@@ -53,6 +53,10 @@ User.init({
     type: DataTypes.DATE,
     required: true,
     defaultValue: new Date()
+  },
+  balance: {
+    type: DataTypes.INTEGER,
+    defaultValue: 0,
   }
 }, { tableName: 'Users', timestamps: false, sequelize: getSequelizeInstance() });
 

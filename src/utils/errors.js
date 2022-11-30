@@ -38,4 +38,13 @@ class BlockedAccount extends Error {
   }
 }
 
-module.exports = { UserAlreadyExists, UserNotFound, WrongPassword, UnableToMatchEmail, BlockedAccount };
+class InsufficientFunds extends Error {
+  constructor(message = 'No posee los fondos suficientes para realizar la extraccion.', code = 400) {
+    super();
+    this.message = message;
+    this.statusCode = code;
+  }
+}
+
+
+module.exports = { UserAlreadyExists, UserNotFound, WrongPassword, UnableToMatchEmail, BlockedAccount, InsufficientFunds };

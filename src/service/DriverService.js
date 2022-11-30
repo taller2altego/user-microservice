@@ -53,9 +53,6 @@ class DriverService {
           if (body.balance > driver.balance) {
             buildError(insufficientFunds);
           }
-          console.log("ENTRO ACA  123");
-          console.log(body.balance);
-          console.log(driver.balance);
           return DriverRepository.patchById(driverId, { balance: driver.balance - body.balance });
         }
         return DriverRepository.patchById(driverId, { balance: body.balance + driver.balance });

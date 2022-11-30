@@ -51,6 +51,8 @@ class UserRepository {
   }
 
   patchById(id, body) {
+    console.log(id);
+    console.log(body);
     return UserModel.update(body, { where: { id } });
   }
 

@@ -9,7 +9,8 @@ CREATE TABLE "Users"(
     number_of_scores INT NOT NULL,
     total_score INT NOT NULL,
     is_blocked BOOLEAN NOT NULL,
-    created_at date NOT NULL
+    created_at date NOT NULL,
+    balance FLOAT NOT NULL
 );
 
 CREATE TABLE "Drivers"(

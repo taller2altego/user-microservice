@@ -22,10 +22,6 @@ class DriverRepository {
   }
 
   patchById(driverId, body) {
-    console.log("ENTRO ACA 321");
-    console.log(driverId);
-    console.log(body);
-
     return DriverModel
       .update(body, { where: { id: driverId } })
       .then(() => body);
