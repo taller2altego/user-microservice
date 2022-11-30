@@ -34,3 +34,14 @@ CREATE TABLE "Roles"(
     name VARCHAR(50) NOT NULL,
     description VARCHAR(50) NOT NULL
 );
+
+-- INSERT INTO Public."Roles"("id", "name", "description") VALUES (1, "superadmin", "superadmin")
+-- INSERT INTO Public."Roles"("id", "name", "description") VALUES (2, 'admin', 'admin')
+-- INSERT INTO Public."Roles"("id", "name", "description") VALUES (3, 'user', 'user')
+-- INSERT INTO Public."Roles"("id", "name", "description") VALUES (4, 'driver', 'driver')
+
+-- INSERT INTO Public."Users"("id", "name", "lastname", "phone_number", "email", "password", "role_id", "number_of_scores", "total_score", "is_blocked", "created_at") VALUES ('superadmin', 'superadmin', 123, 'superadmin@fiuber.com', '1234', 1, 0, 0, false, '2020-10-10')
+-- INSERT INTO Public."Users"("id", "name", "lastname", "phone_number", "email", "password", "role_id", "number_of_scores", "total_score", "is_blocked", "created_at") VALUES ('admin', 'admin', 123, 'admin@fiuber.com', '1234', 2, 0, 0, false, '2020-10-10')
+-- INSERT INTO Public."Users"("id", "name", "lastname", "phone_number", "email", "password", "role_id", "number_of_scores", "total_score", "is_blocked", "created_at") VALUES ('user', 'user', 123, 'user@fiuber.com', '1234', 3, 0, 0, false, '2020-10-10')
+-- INSERT INTO Public."Users"("id", "name", "lastname", "phone_number", "email", "password", "role_id", "number_of_scores", "total_score", "is_blocked", "created_at") VALUES ('user', 'blocked', 123, 'blockeduser@fiuber.com', '1234', 3, 0, 0, true, '2020-10-10')
+-- INSERT INTO Public."Users"("id", "name", "lastname", "phone_number", "email", "password", "role_id", "number_of_scores", "total_score", "is_blocked", "created_at") VALUES ('driver', 'driver', 123, 'driver@fiuber.com', '1234', 4, 0, 0, false, '2020-10-10')
