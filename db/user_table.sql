@@ -19,7 +19,8 @@ CREATE TABLE "Drivers"(
     model VARCHAR(50) NOT NULL,
     license_plate VARCHAR(50) NOT NULL,
     number_of_scores INT NOT NULL,
-    total_score INT NOT NULL
+    total_score INT NOT NULL,
+    balance FLOAT NOT NULL
 );
 
 CREATE TABLE "Reports"(

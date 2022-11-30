@@ -2,7 +2,7 @@ const UserRepository = require('../repository/UserRepository');
 const DriverRepository = require('../repository/DriverRepository');
 
 const { errors } = require("config");
-const { userNotFound, driverNotFound } = errors;
+const { userNotFound, driverNotFound, insufficientFunds } = errors;
 
 const buildError = (objectMessage) => {
   const err = new Error();
@@ -45,6 +45,20 @@ class DriverService {
           totalScore: (oldtotalScore * oldNumberOfScores + body.score) / (oldNumberOfScores + 1)
         };
         return DriverRepository.patchById(driverId, newScore);
+      });
+    }
+    if (body.balance) {
+      return this.findDriverById(driverId).then((driver) => {
+        if (body.withdrawFunds) {
+          if (body.balance > driver.balance) {
+            buildError(insufficientFunds);
+          }
+          console.log("ENTRO ACA  123");
+          console.log(body.balance);
+          console.log(driver.balance);
+          return DriverRepository.patchById(driverId, { balance: driver.balance - body.balance });
+        }
+        return DriverRepository.patchById(driverId, { balance: body.balance + driver.balance });
       });
     }
     return this.findDriverById(driverId).then(() => DriverRepository.patchById(driverId, body));

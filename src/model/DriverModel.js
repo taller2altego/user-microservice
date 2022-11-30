@@ -34,7 +34,12 @@ Driver.init({
     type: DataTypes.INTEGER,
     defaultValue: 0,
     allowNull: false
+  },
+  balance: {
+    type: DataTypes.INTEGER,
+    defaultValue: 0,
   }
+
 }, { tableName: 'Drivers', timestamps: false, sequelize: getSequelizeInstance() });
 
 /**
