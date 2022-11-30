@@ -11,7 +11,6 @@ const logger = require('../../winston');
 const router = require('express').Router();
 
 module.exports = app => {
-
   const handlerResponse = (req, res) => {
     const { statusCode, ...otherFields } = res.customResponse;
     res.status(statusCode).send(otherFields);
@@ -21,7 +20,7 @@ module.exports = app => {
     logger.info(JSON.stringify(req.body, undefined, 2));
     logger.info(JSON.stringify(req.query, undefined, 2));
     next();
-  }
+  };
 
   app.use('/reports', router);
   router.get('/', logInput, reportController.getAllReports, handlerResponse);

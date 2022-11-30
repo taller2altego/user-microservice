@@ -1,11 +1,12 @@
+const { errors } = require('config');
 const UserRepository = require('../repository/UserRepository');
 const DriverRepository = require('../repository/DriverRepository');
 
-const { errors } = require("config");
 const ReportRepository = require('../repository/ReportRepository');
+
 const { userNotFound, driverNotFound } = errors;
 
-const buildError = (objectMessage) => {
+const buildError = objectMessage => {
   const err = new Error();
   err.statusCode = objectMessage.statusCode;
   err.message = objectMessage.message;
@@ -18,7 +19,7 @@ class DriverService {
     if (user === null) {
       buildError(userNotFound);
     }
-    await UserRepository.patchById(userId, { roleId: 4 })
+    await UserRepository.patchById(userId, { roleId: 4 });
     return DriverRepository.create({ ...body, userId });
   }
 
@@ -42,7 +43,7 @@ class DriverService {
 
   patchDriverById(driverId, body) {
     if (body.score) {
-      return this.findDriverById(driverId).then((driver) => {
+      return this.findDriverById(driverId).then(driver => {
         const oldNumberOfScores = driver.numberOfScores;
         const oldtotalScore = driver.totalScore;
         const newScore = {

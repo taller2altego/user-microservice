@@ -1,4 +1,4 @@
-const restrictToAdmin = require("./restrictToAdmin");
+const restrictToAdmin = require('./restrictToAdmin');
 
 module.exports = fieldId => (req, res, next) => {
   if (req.query.id != req.params[fieldId]) {

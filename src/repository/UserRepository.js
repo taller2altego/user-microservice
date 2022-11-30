@@ -1,7 +1,7 @@
+const { Sequelize } = require('sequelize');
 const UserModel = require('../model/UserModel');
 const DriverModel = require('../model/DriverModel');
 const ReportModel = require('../model/ReportModel');
-const { Sequelize } = require('sequelize');
 
 class UserRepository {
   constructor() { }
@@ -15,7 +15,7 @@ class UserRepository {
   findAll({ email }) {
     const where = {};
     if (email) {
-      where['email'] = email;
+      where.email = email;
     }
 
     return UserModel
@@ -34,7 +34,9 @@ class UserRepository {
           as: 'drivers',
           required: false,
           include: [
-            { model: ReportModel, as: 'reports', required: false, attributes: [] }
+            {
+              model: ReportModel, as: 'reports', required: false, attributes: []
+            }
           ]
         }
       ],
@@ -43,7 +45,7 @@ class UserRepository {
 
     return UserModel
       .findByPk(id, params)
-      .then(user => user ? user.toJSON() : null)
+      .then(user => (user ? user.toJSON() : null))
       .then(user => {
         if (user) {
           const { drivers, ...userData } = user;
@@ -52,9 +54,8 @@ class UserRepository {
             isDriver: user.drivers.length > 0,
             driverId: user.drivers.length ? user.drivers[0].id : undefined
           };
-        } else {
-          return null;
         }
+        return null;
       });
   }
 

@@ -18,7 +18,7 @@ class DriverRepository {
   findById(driverId) {
     return DriverModel
       .findOne({ where: { id: driverId } })
-      .then(driver => driver ? driver.toJSON() : null);
+      .then(driver => (driver ? driver.toJSON() : null));
   }
 
   patchById(driverId, body) {

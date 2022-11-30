@@ -21,7 +21,7 @@ Report.init({
   description: {
     type: DataTypes.STRING,
     allowNull: false
-  },
+  }
 }, { tableName: 'Reports', timestamps: false, sequelize: getSequelizeInstance() });
 
 /**

@@ -38,4 +38,6 @@ class BlockedAccount extends Error {
   }
 }
 
-module.exports = { UserAlreadyExists, UserNotFound, WrongPassword, UnableToMatchEmail, BlockedAccount };
+module.exports = {
+  UserAlreadyExists, UserNotFound, WrongPassword, UnableToMatchEmail, BlockedAccount
+};

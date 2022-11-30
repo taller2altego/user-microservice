@@ -14,9 +14,7 @@ class UserService {
       .then(user => {
         if (user === null) {
           return UserRepository.signUp(body)
-            .then(res => {
-              return parseRoleId(res);
-            });
+            .then(res => parseRoleId(res));
         }
         throw new UserAlreadyExists();
       });
@@ -82,7 +80,7 @@ class UserService {
   verifyUserByEmail(email) {
     return UserRepository
       .findUserByEmail(email)
-      .then((user) => {
+      .then(user => {
         if (user === null) {
           throw new UserNotFound();
         }
@@ -94,7 +92,7 @@ class UserService {
 
   patchUserById(id, body) {
     if (body.score) {
-      return this.findUserById(id).then((user) => {
+      return this.findUserById(id).then(user => {
         const oldNumberOfScores = user.numberOfScores;
         const oldtotalScore = user.totalScore;
         const newScore = {
@@ -105,16 +103,12 @@ class UserService {
       });
     }
     return this.findUserById(id)
-      .then(() => {
-        return UserRepository.patchById(id, body);
-      });
+      .then(() => UserRepository.patchById(id, body));
   }
 
   patchUserByEmail(email, body) {
     return this.verifyUserByEmail(email)
-      .then(() => {
-        return UserRepository.patchByEmail(email, body);
-      });
+      .then(() => UserRepository.patchByEmail(email, body));
   }
 
   patchDefaultLocationByUserId(userId, defaultAddress) {
@@ -123,7 +117,7 @@ class UserService {
 
   removeUserById(id, email) {
     return this.findUserById(id)
-      .then((user) => {
+      .then(user => {
         if (email === user.email) {
           return UserRepository.removeById(id);
         }
@@ -133,7 +127,7 @@ class UserService {
 
   changePasswordByEmail(email, newPassword) {
     return this.patchUserByEmail(email, {
-      password: newPassword,
+      password: newPassword
     });
   }
 }
