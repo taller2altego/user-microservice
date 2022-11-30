@@ -117,6 +117,10 @@ class UserService {
       });
   }
 
+  patchDefaultLocationByUserId(userId, defaultAddress) {
+    return UserRepository.patchDefaultLocationByUserId(userId, defaultAddress);
+  }
+
   removeUserById(id, email) {
     return this.findUserById(id)
       .then((user) => {

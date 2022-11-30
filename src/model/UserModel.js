@@ -49,6 +49,9 @@ User.init({
     defaultValue: false,
     allowNull: false
   },
+  defaultAddress: {
+    type: DataTypes.STRING
+  },
   createdAt: {
     type: DataTypes.DATE,
     required: true,

@@ -37,6 +37,7 @@ module.exports = app => {
   router.get('/', logInput, restrictToAdmin('isAdmin'), user.findAllUsers, handlerResponse);
   router.get('/:id', logInput, requestValidator('id'), user.findUserById, handlerResponse);
   router.patch('/', logInput, user.patchUserByEmail, handlerResponse);
+  router.patch('/:id/location', logInput, user.patchDefaultLocationByUserId, handlerResponse);
   router.patch('/:id', logInput, requestValidator('id'), user.patchUserById, handlerResponse);
   router.delete('/:id', logInput, requestValidator('id'), user.removeUserById, handlerResponse);
 

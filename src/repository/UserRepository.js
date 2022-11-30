@@ -58,6 +58,10 @@ class UserRepository {
     return UserModel.update(body, { where: { email } });
   }
 
+  patchDefaultLocationByUserId(id, defaultAddress) {
+    return UserModel.update({ defaultAddress }, { where: { id } });
+  }
+
   removeById(id) {
     return UserModel.destroy({ where: { id } });
   }
