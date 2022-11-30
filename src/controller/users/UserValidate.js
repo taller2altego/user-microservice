@@ -55,7 +55,7 @@ const schema = {
     }
   },
   additionalProperties: false
-}
+};
 
 const validateUser = (req, res, next) => {
   const validate = ajv.compile(schema);

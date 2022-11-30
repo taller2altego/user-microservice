@@ -25,7 +25,18 @@ class UserRepository {
     return UserModel
       .findByPk(id, { include: [{ model: DriverModel, as: 'isDriver', required: false }] })
       .then(user => user ? user.toJSON() : null)
-      .then(user => user ? ({ ...user, isDriver: user.isDriver.length > 0 }) : null);
+      .then(user => {
+        if (user) {
+          console.log(user);
+          return {
+            ...user,
+            isDriver: user.isDriver.length > 0,
+            driverId: user.isDriver.length ? user.isDriver[0].id : undefined
+          };
+        } else {
+          return null;
+        }
+      });
   }
 
   findUserByEmail(email) {
