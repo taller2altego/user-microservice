@@ -59,8 +59,7 @@ User.init({
   }
 }, { tableName: 'Users', timestamps: false, sequelize: getSequelizeInstance() });
 
-User.hasMany(DriverModel, { as: 'isDriver' });
-
+User.hasMany(DriverModel, { as: 'drivers' });
 /**
  * Function to retrive the sequelize instance.
  * It's being kept separate for testing purposes.

@@ -2,6 +2,7 @@ const UserRepository = require('../repository/UserRepository');
 const DriverRepository = require('../repository/DriverRepository');
 
 const { errors } = require("config");
+const ReportRepository = require('../repository/ReportRepository');
 const { userNotFound, driverNotFound } = errors;
 
 const buildError = (objectMessage) => {
@@ -33,6 +34,10 @@ class DriverService {
         }
         return driver;
       });
+  }
+
+  findAllReportsByDriverId(driverId) {
+    return ReportRepository.findAllByDriverId(driverId);
   }
 
   patchDriverById(driverId, body) {

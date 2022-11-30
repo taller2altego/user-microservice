@@ -97,6 +97,13 @@ module.exports = {
       total_score: 0
     };
     await queryInterface.bulkInsert('Drivers', [isDriver]);
+
+    await queryInterface.bulkInsert('Reports', [
+      { id: 1, user_id: 3, driver_id: 1, description: 'denuncia 1' },
+      { id: 2, user_id: 3, driver_id: 1, description: 'denuncia 2' },
+      { id: 3, user_id: 3, driver_id: 1, description: 'denuncia 3' },
+      { id: 4, user_id: 3, driver_id: 1, description: 'denuncia 4' }
+    ]);
   },
 
   async down(queryInterface, Sequelize) {
