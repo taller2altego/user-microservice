@@ -32,14 +32,16 @@ module.exports = app => {
   router.get('/login/oauth', logInput, user.oauthLogin, handlerResponse);
   router.post('/oauth', logInput, oauthValidate, parseRole, user.signUp, handlerResponse);
 
-  router.get('/login', logInput, user.login, handlerResponse);
   router.post('/', logInput, restrictToAdmin('isSuperadmin'), validateUser, parseRole, user.signUp, handlerResponse);
+  router.post('/:userId/driver', validateDriver, driverController.associateDriverToUser, handlerResponse);
+
+  router.get('/login', logInput, user.login, handlerResponse);
   router.get('/', logInput, restrictToAdmin('isAdmin'), user.findAllUsers, handlerResponse);
   router.get('/:id', logInput, requestValidator('id'), user.findUserById, handlerResponse);
+
   router.patch('/', logInput, user.patchUserByEmail, handlerResponse);
   router.patch('/:id/location', logInput, user.patchDefaultLocationByUserId, handlerResponse);
   router.patch('/:id', logInput, requestValidator('id'), user.patchUserById, handlerResponse);
-  router.delete('/:id', logInput, requestValidator('id'), user.removeUserById, handlerResponse);
 
-  router.post('/:userId/driver', validateDriver, driverController.associateDriverToUser, handlerResponse);
+  router.delete('/:id', logInput, requestValidator('id'), user.removeUserById, handlerResponse);
 };

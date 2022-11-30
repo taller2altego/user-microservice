@@ -44,6 +44,19 @@ class DriverController {
       });
   }
 
+  findAllReportsByDriverId(req, res, next) {
+    return DriverService.findAllReportsByDriverId(req.params.id)
+      .then(drivers => {
+        res.customResponse = { statusCode: 200, data: drivers };
+        next();
+      })
+      .catch(err => {
+        logger.error(JSON.stringify(err, undefined, 2));
+        res.customResponse = handlerError(err);
+        next();
+      });
+  }
+
   async patchDriverById(req, res, next) {
     return DriverService.patchDriverById(req.params.id, req.body)
       .then(() => {

@@ -24,6 +24,8 @@ module.exports = app => {
 
   router.get('/', logInput, driverController.findAllDrivers, handlerResponse);
   router.get('/:id', logInput, driverController.findDriverById, handlerResponse);
+  router.get('/:id/reports', logInput, driverController.findAllReportsByDriverId, handlerResponse);
+
   router.patch('/:id', logInput, driverController.patchDriverById, handlerResponse);
   router.delete('/:id', logInput, driverController.removeDriverById, handlerResponse);
 };

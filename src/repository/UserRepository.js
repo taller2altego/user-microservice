@@ -1,5 +1,7 @@
 const UserModel = require('../model/UserModel');
 const DriverModel = require('../model/DriverModel');
+const ReportModel = require('../model/ReportModel');
+const { Sequelize } = require('sequelize');
 
 class UserRepository {
   constructor() { }
@@ -22,16 +24,33 @@ class UserRepository {
   }
 
   findById(id) {
+    const params = {
+      attributes: {
+        include: [[Sequelize.fn('COUNT', Sequelize.col('drivers.reports.id')), 'reportsCount']]
+      },
+      include: [
+        {
+          model: DriverModel,
+          as: 'drivers',
+          required: false,
+          include: [
+            { model: ReportModel, as: 'reports', required: false, attributes: [] }
+          ]
+        },
+
+      ],
+      group: [Sequelize.col('User.id'), Sequelize.col('drivers.id')]
+    };
+
     return UserModel
-      .findByPk(id, { include: [{ model: DriverModel, as: 'isDriver', required: false }] })
+      .findByPk(id, params)
       .then(user => user ? user.toJSON() : null)
       .then(user => {
         if (user) {
-          console.log(user);
           return {
             ...user,
-            isDriver: user.isDriver.length > 0,
-            driverId: user.isDriver.length ? user.isDriver[0].id : undefined
+            isDriver: user.drivers.length > 0,
+            driverId: user.drivers.length ? user.drivers[0].id : undefined
           };
         } else {
           return null;
