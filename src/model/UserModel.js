@@ -68,5 +68,6 @@ User.init({
 }, { tableName: 'Users', timestamps: false, sequelize: getSequelizeInstance() });
 
 User.hasMany(DriverModel, { as: 'drivers' });
+DriverModel.hasOne(User, { as: 'user', foreignKey: 'id', sourceKey: 'userId' });
 
 module.exports = User;

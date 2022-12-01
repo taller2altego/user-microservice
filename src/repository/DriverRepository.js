@@ -1,4 +1,5 @@
 const DriverModel = require('../model/DriverModel');
+const UserModel = require('../model/UserModel');
 
 class DriverRepository {
   create(body) {
@@ -14,8 +15,15 @@ class DriverRepository {
   }
 
   findById(driverId) {
+    const params = {
+      include: [
+        { model: UserModel, as: 'user', required: false }
+      ],
+      where: { id: driverId }
+    };
+
     return DriverModel
-      .findOne({ where: { id: driverId } })
+      .findOne(params)
       .then(driver => (driver ? driver.toJSON() : null));
   }
 
