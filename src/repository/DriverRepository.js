@@ -24,7 +24,11 @@ class DriverRepository {
 
     return DriverModel
       .findOne(params)
-      .then(driver => (driver ? driver.toJSON() : null));
+      .then(driver => (driver ? driver.toJSON() : null))
+      .then(driver => ({
+        ...driver,
+        user: { name: driver.user.name, lastname: driver.user.lastname }
+      }));
   }
 
   patchById(driverId, body) {
