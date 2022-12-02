@@ -47,7 +47,7 @@ class DriverService {
         return DriverRepository.patchById(driverId, newScore);
       });
     }
-    if (body.balance) {
+    if (body.isTransaction) {
       return this.findDriverById(driverId).then((driver) => {
         if (body.withdrawFunds) {
           if (body.balance > driver.balance) {

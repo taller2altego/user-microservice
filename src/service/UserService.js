@@ -9,6 +9,13 @@ const {
 } = require('../utils/errors');
 const { parseRoleId } = require('../utils/parsing');
 
+const buildError = (objectMessage) => {
+  const err = new Error();
+  err.statusCode = objectMessage.statusCode;
+  err.message = objectMessage.message;
+  throw err;
+};
+
 class UserService {
   async signUp(body) {
     return UserRepository.findUserByEmail(body.email)
@@ -108,12 +115,12 @@ class UserService {
     if (body.isTransaction) {
       return this.findUserById(id).then((user) => {
         if (body.withdrawFunds) {
-          if (body.amount > user.balance) {
-            buildError(InsufficientFunds);
+          if (body.balance > user.balance) {
+            throw new InsufficientFunds();
           }
-          return UserRepository.patchById(id, { balance: user.balance - body.amount });
+          return UserRepository.patchById(id, { balance: user.balance - body.balance });
         }
-        return UserRepository.patchById(id, { balance: user.balance + body.amount });
+        return UserRepository.patchById(id, { balance: user.balance + body.balance });
       });
     }
     return this.findUserById(id)
