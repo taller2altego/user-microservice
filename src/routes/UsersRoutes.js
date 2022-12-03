@@ -33,6 +33,8 @@ module.exports = app => {
 
   router.post('/', logInput, restrictToAdmin('isSuperadmin'), validateUser, parseRole, user.signUp, handlerResponse);
   router.post('/:userId/driver', validateDriver, driverController.associateDriverToUser, handlerResponse);
+  router.post('/verifyUserByEmail', user.verifyUserByEmail, handlerResponse); 
+  router.post('/changePassword', user.changePasswordByEmail, handlerResponse); 
 
   router.get('/login', logInput, user.login, handlerResponse);
   router.get('/', logInput, restrictToAdmin('isAdmin'), user.findAllUsers, handlerResponse);
@@ -41,6 +43,6 @@ module.exports = app => {
   router.patch('/', logInput, user.patchUserByEmail, handlerResponse);
   router.patch('/:id/location', logInput, user.patchDefaultLocationByUserId, handlerResponse);
   router.patch('/:id', logInput, requestValidator('id'), user.patchUserById, handlerResponse);
-
+  
   router.delete('/:id', logInput, requestValidator('id'), user.removeUserById, handlerResponse);
 };
