@@ -15,6 +15,9 @@ class UserRepository {
       attributes: {
         include: [[Sequelize.fn('COUNT', Sequelize.col('drivers.reports.id')), 'reportsCount']]
       },
+      order: [
+        [Sequelize.col('User.id'), 'ASC'],
+      ],
       include: [
         {
           model: DriverModel,
@@ -36,7 +39,11 @@ class UserRepository {
 
     return UserModel
       .findAll(params)
-      .then(users => users.map(user => user.toJSON()));
+      .then(users => users.map(user => user.toJSON()))
+      .catch(err => {
+        console.log(err);
+        throw err;
+      });
   }
 
   findById(id) {
