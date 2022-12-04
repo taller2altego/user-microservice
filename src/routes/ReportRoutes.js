@@ -21,6 +21,5 @@ module.exports = app => {
   };
 
   app.use('/reports', router);
-  router.get('/', logInput, reportController.getAllReports, handlerResponse);
   router.post('/', logInput, validateReport, reportController.createReport, handlerResponse);
 };
