@@ -135,24 +135,9 @@ class UserController {
   async patchDefaultLocationByUserId(req, res, next) {
     const userId = req.params.id;
     const defaultAddress = req.body.defaultAddress;
-    return UserService.patchDefaultLocationByUserId(userId, defaultAddress)
-      .then(() => {
-        res.customResponse = { statusCode: 204 };
-        next();
-      })
-      .catch((err) => {
-        logger.error(JSON.stringify(err));
-        if (err.statusCode === undefined) {
-          res.customResponse = { statusCode: 500, message: 'Unexpected Error' };
-        } else {
-          res.customResponse = { statusCode: err.statusCode, message: err.message };
-        }
-        next();
-      });
-  }
-
-  async removeUserById(req, res, next) {
-    return UserService.removeUserById(req.params.id, req.body.email)
+    const defaultLatitude = req.body.defaultLatitude;
+    const defaultLongitude = req.body.defaultLongitude;
+    return UserService.patchDefaultLocationByUserId(userId, { defaultAddress, defaultLatitude, defaultLongitude })
       .then(() => {
         res.customResponse = { statusCode: 204 };
         next();

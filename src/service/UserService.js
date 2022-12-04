@@ -111,8 +111,8 @@ class UserService {
       .then(() => UserRepository.patchByEmail(email, body));
   }
 
-  patchDefaultLocationByUserId(userId, defaultAddress) {
-    return UserRepository.patchDefaultLocationByUserId(userId, defaultAddress);
+  patchDefaultLocationByUserId(userId, body) {
+    return UserRepository.patchDefaultLocationByUserId(userId, body);
   }
 
   removeUserById(id, email) {
