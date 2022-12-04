@@ -31,7 +31,7 @@ class CommentController {
 
 
   async getUserCommentsById(req, res, next) {
-    return CommentService.getUserCommentsById(req.body.userId)
+    return CommentService.getUserCommentsById(req.params.userId)
       .then((comments) => {
         res.customResponse = { statusCode: 200, comments };
         next();
@@ -44,7 +44,7 @@ class CommentController {
   }
 
   async getDriverCommentsById(req, res, next) {
-    return CommentService.getDriverCommentsById(req.body.userId)
+    return CommentService.getDriverCommentsById(req.params.userId)
       .then((comments) => {
         res.customResponse = { statusCode: 200, comments };
         next();

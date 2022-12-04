@@ -21,8 +21,8 @@ module.exports = app => {
   };
 
   app.use('/comments', router);
-  router.get('/user', logInput, CommentController.getUserCommentsById, handlerResponse);
-  router.get('/driver', logInput, CommentController.getDriverCommentsById, handlerResponse);
+  router.get('/user/:userId', logInput, CommentController.getUserCommentsById, handlerResponse);
+  router.get('/driver/:userId', logInput, CommentController.getDriverCommentsById, handlerResponse);
   router.post('/user', logInput, validateComment, CommentController.createUserComment, handlerResponse);
   router.post('/driver', logInput, validateComment, CommentController.createDriverComment, handlerResponse);
 };
