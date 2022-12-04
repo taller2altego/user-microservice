@@ -39,7 +39,14 @@ class UserRepository {
 
     return UserModel
       .findAll(params)
-      .then(users => users.map(user => user.toJSON()))
+      .then(users => users.map(user => {
+        const data = user.toJSON();
+        const totalScore = data.numberOfScores != 0 ? data.totalScore / data.numberOfScores : 0;
+        return {
+          ...data,
+          totalScore: totalScore
+        };
+      }))
       .catch(err => {
         console.log(err);
         throw err;
@@ -72,10 +79,12 @@ class UserRepository {
       .then(user => {
         if (user) {
           const { drivers, ...userData } = user;
+          const totalScore = user.numberOfScores != 0 ? user.totalScore / user.numberOfScores : 0;
           return {
             ...userData,
             isDriver: user.drivers.length > 0,
-            driverId: user.drivers.length ? user.drivers[0].id : undefined
+            driverId: user.drivers.length ? user.drivers[0].id : undefined,
+            totalScore: totalScore
           };
         }
         return null;

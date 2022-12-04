@@ -94,10 +94,10 @@ class UserService {
     if (body.score) {
       return this.findUserById(id).then(user => {
         const oldNumberOfScores = user.numberOfScores;
-        const oldtotalScore = user.totalScore;
+        const oldtotalScore = user.totalScore * oldNumberOfScores;
         const newScore = {
           numberOfScores: oldNumberOfScores + 1,
-          totalScore: (oldtotalScore * oldNumberOfScores + body.score) / (oldNumberOfScores + 1)
+          totalScore: oldtotalScore + body.score
         };
         return UserRepository.patchById(id, newScore);
       });
