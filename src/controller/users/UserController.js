@@ -135,7 +135,9 @@ class UserController {
   async patchDefaultLocationByUserId(req, res, next) {
     const userId = req.params.id;
     const defaultAddress = req.body.defaultAddress;
-    return UserService.patchDefaultLocationByUserId(userId, defaultAddress)
+    const defaultLatitude = req.body.defaultLatitude;
+    const defaultLongitude = req.body.defaultLongitude;
+    return UserService.patchDefaultLocationByUserId(userId, { defaultAddress, defaultLatitude, defaultLongitude })
       .then(() => {
         res.customResponse = { statusCode: 204 };
         next();

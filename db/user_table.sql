@@ -10,6 +10,8 @@ CREATE TABLE "Users"(
     total_score INT NOT NULL,
     is_blocked BOOLEAN NOT NULL,
     default_address VARCHAR(500),
+    default_latitude float(53),
+    default_longitude float(53),
     created_at date NOT NULL
 );
 
