@@ -58,7 +58,7 @@ User.init({
     allowNull: false
   },
   defaultAddress: {
-    type: DataTypes.FLOAT
+    type: DataTypes.STRING
   },
   defaultLatitude: {
     type: DataTypes.FLOAT
