@@ -16,7 +16,7 @@ class UserRepository {
         include: [[Sequelize.fn('COUNT', Sequelize.col('drivers.reports.id')), 'reportsCount']]
       },
       order: [
-        [Sequelize.col('User.id'), 'ASC'],
+        [Sequelize.col('User.id'), 'ASC']
       ],
       include: [
         {
@@ -41,14 +41,15 @@ class UserRepository {
       .findAll(params)
       .then(users => users.map(user => {
         const data = user.toJSON();
-        const totalScore = data.numberOfScores != 0 ? data.totalScore / data.numberOfScores : 0;
+        const scores = data.numberOfScores;
+        const sumatory = data.totalScore;
+        const totalScore = scores !== 0 ? sumatory / scores : 0;
         return {
           ...data,
-          totalScore: totalScore
+          totalScore
         };
       }))
       .catch(err => {
-        console.log(err);
         throw err;
       });
   }
@@ -79,12 +80,14 @@ class UserRepository {
       .then(user => {
         if (user) {
           const { drivers, ...userData } = user;
-          const totalScore = user.numberOfScores != 0 ? user.totalScore / user.numberOfScores : 0;
+          const scores = user.numberOfScores;
+          const sumatory = user.totalScore;
+          const totalScore = scores !== 0 ? sumatory / scores : 0;
           return {
             ...userData,
             isDriver: user.drivers.length > 0,
             driverId: user.drivers.length ? user.drivers[0].id : undefined,
-            totalScore: totalScore
+            totalScore
           };
         }
         return null;

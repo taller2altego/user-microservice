@@ -13,10 +13,10 @@ class DriverRepository {
       .findAll()
       .then(drivers => drivers.map(driver => {
         const data = driver.toJSON();
-        const totalScore = data.numberOfScores != 0 ? data.totalScore / data.numberOfScores : 0;
+        const totalScore = data.numberOfScores !== 0 ? data.totalScore / data.numberOfScores : 0;
         return {
           ...data,
-          totalScore: totalScore
+          totalScore
         };
       }));
   }
@@ -33,10 +33,12 @@ class DriverRepository {
       .findOne(params)
       .then(driver => (driver ? driver.toJSON() : null))
       .then(driver => {
-        const totalScore = driver.numberOfScores != 0 ? driver.totalScore / driver.numberOfScores : 0;
+        const scores = driver.numberOfScores;
+        const sumatory = driver.totalScore;
+        const totalScore = scores !== 0 ? sumatory / scores : 0;
         return {
           ...driver,
-          totalScore: totalScore,
+          totalScore,
           user: { name: driver.user.name, lastname: driver.user.lastname }
         };
       });
