@@ -11,7 +11,14 @@ class DriverRepository {
   findAll() {
     return DriverModel
       .findAll()
-      .then(drivers => drivers.map(driver => driver.toJSON()));
+      .then(drivers => drivers.map(driver => {
+        const data = driver.toJSON();
+        const totalScore = data.numberOfScores != 0 ? data.totalScore / data.numberOfScores : 0;
+        return {
+          ...data,
+          totalScore: totalScore
+        };
+      }));
   }
 
   findById(driverId) {
@@ -25,10 +32,14 @@ class DriverRepository {
     return DriverModel
       .findOne(params)
       .then(driver => (driver ? driver.toJSON() : null))
-      .then(driver => ({
-        ...driver,
-        user: { name: driver.user.name, lastname: driver.user.lastname }
-      }));
+      .then(driver => {
+        const totalScore = driver.numberOfScores != 0 ? driver.totalScore / driver.numberOfScores : 0;
+        return {
+          ...driver,
+          totalScore: totalScore,
+          user: { name: driver.user.name, lastname: driver.user.lastname }
+        };
+      });
   }
 
   patchById(driverId, body) {

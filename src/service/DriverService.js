@@ -45,10 +45,10 @@ class DriverService {
     if (body.score) {
       return this.findDriverById(driverId).then(driver => {
         const oldNumberOfScores = driver.numberOfScores;
-        const oldtotalScore = driver.totalScore;
+        const oldtotalScore = driver.totalScore * oldNumberOfScores;
         const newScore = {
           numberOfScores: oldNumberOfScores + 1,
-          totalScore: (oldtotalScore * oldNumberOfScores + body.score) / (oldNumberOfScores + 1)
+          totalScore: oldtotalScore + body.score
         };
         return DriverRepository.patchById(driverId, newScore);
       });
