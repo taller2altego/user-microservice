@@ -1,10 +1,9 @@
 const { errors } = require('config');
 const UserRepository = require('../repository/UserRepository');
 const DriverRepository = require('../repository/DriverRepository');
-
 const ReportRepository = require('../repository/ReportRepository');
 
-const { userNotFound, driverNotFound } = errors;
+const { userNotFound, driverNotFound, insufficientFunds } = errors;
 
 const buildError = objectMessage => {
   const err = new Error();
@@ -51,6 +50,17 @@ class DriverService {
           totalScore: oldtotalScore + body.score
         };
         return DriverRepository.patchById(driverId, newScore);
+      });
+    }
+    if (body.isTransaction) {
+      return this.findDriverById(driverId).then(driver => {
+        if (body.withdrawFunds) {
+          if (body.balance > driver.balance) {
+            buildError(insufficientFunds);
+          }
+          return DriverRepository.patchById(driverId, { balance: driver.balance - body.balance });
+        }
+        return DriverRepository.patchById(driverId, { balance: body.balance + driver.balance });
       });
     }
     return this.findDriverById(driverId).then(() => DriverRepository.patchById(driverId, body));

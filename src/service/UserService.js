@@ -4,7 +4,8 @@ const {
   UserNotFound,
   WrongPassword,
   UnableToMatchEmail,
-  BlockedAccount
+  BlockedAccount,
+  NotEnoughFunds
 } = require('../utils/errors');
 const { parseRoleId } = require('../utils/parsing');
 
@@ -100,6 +101,17 @@ class UserService {
           totalScore: oldtotalScore + body.score
         };
         return UserRepository.patchById(id, newScore);
+      });
+    }
+    if (body.isTransaction) {
+      return this.findUserById(id).then(user => {
+        if (body.withdrawFunds) {
+          if (body.balance > user.balance) {
+            throw new NotEnoughFunds();
+          }
+          return UserRepository.patchById(id, { balance: user.balance - body.balance });
+        }
+        return UserRepository.patchById(id, { balance: user.balance + body.balance });
       });
     }
     return this.findUserById(id)

@@ -37,6 +37,10 @@
     "unableToMatchEmail": {
       "statusCode": 402,
       "message": "El email indicado no coincide con el email del usuario."
+    },
+    "insufficientFunds": {
+      "statusCode": 400,
+      "message": "No posee los fondos suficientes para realizar la extraccion."
     }
   }
 }
