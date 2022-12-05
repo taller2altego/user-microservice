@@ -1,8 +1,7 @@
 const DriverModel = require('../model/DriverModel');
+const UserModel = require('../model/UserModel');
 
 class DriverRepository {
-  constructor() { }
-
   create(body) {
     return DriverModel
       .create(body)
@@ -12,13 +11,37 @@ class DriverRepository {
   findAll() {
     return DriverModel
       .findAll()
-      .then(drivers => drivers.map(driver => driver.toJSON()));
+      .then(drivers => drivers.map(driver => {
+        const data = driver.toJSON();
+        const totalScore = data.numberOfScores !== 0 ? data.totalScore / data.numberOfScores : 0;
+        return {
+          ...data,
+          totalScore
+        };
+      }));
   }
 
   findById(driverId) {
+    const params = {
+      include: [
+        { model: UserModel, as: 'user', required: false }
+      ],
+      where: { id: driverId }
+    };
+
     return DriverModel
-      .findOne({ where: { id: driverId } })
-      .then(driver => driver ? driver.toJSON() : null);
+      .findOne(params)
+      .then(driver => (driver ? driver.toJSON() : null))
+      .then(driver => {
+        const scores = driver.numberOfScores;
+        const sumatory = driver.totalScore;
+        const totalScore = scores !== 0 ? sumatory / scores : 0;
+        return {
+          ...driver,
+          totalScore,
+          user: { name: driver.user.name, lastname: driver.user.lastname }
+        };
+      });
   }
 
   patchById(driverId, body) {

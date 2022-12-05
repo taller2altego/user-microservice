@@ -1,6 +1,16 @@
 const { Model, DataTypes } = require('sequelize');
 
+const Report = require('./ReportModel');
+
 const sequelizeInstance = require('../sequelize').getSequelizeInstance();
+
+/**
+ * Function to retrive the sequelize instance.
+ * It's being kept separate for testing purposes.
+ */
+function getSequelizeInstance() {
+  return sequelizeInstance;
+}
 
 class Driver extends Model { }
 
@@ -37,16 +47,10 @@ Driver.init({
   },
   balance: {
     type: DataTypes.INTEGER,
-    defaultValue: 0,
+    defaultValue: 0
   }
 }, { tableName: 'Drivers', timestamps: false, sequelize: getSequelizeInstance() });
 
-/**
- * Function to retrive the sequelize instance.
- * It's being kept separate for testing purposes.
- */
-function getSequelizeInstance() {
-  return sequelizeInstance;
-}
+Driver.hasMany(Report, { as: 'reports' });
 
 module.exports = Driver;

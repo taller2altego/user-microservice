@@ -1,10 +1,11 @@
+const { errors } = require('config');
 const UserRepository = require('../repository/UserRepository');
 const DriverRepository = require('../repository/DriverRepository');
+const ReportRepository = require('../repository/ReportRepository');
 
-const { errors } = require("config");
 const { userNotFound, driverNotFound, insufficientFunds } = errors;
 
-const buildError = (objectMessage) => {
+const buildError = objectMessage => {
   const err = new Error();
   err.statusCode = objectMessage.statusCode;
   err.message = objectMessage.message;
@@ -17,7 +18,7 @@ class DriverService {
     if (user === null) {
       buildError(userNotFound);
     }
-    await UserRepository.patchById(userId, { roleId: 4 })
+    await UserRepository.patchById(userId, { roleId: 4 });
     return DriverRepository.create({ ...body, userId });
   }
 
@@ -35,20 +36,24 @@ class DriverService {
       });
   }
 
+  findAllReportsByDriverId(driverId) {
+    return ReportRepository.findAllByDriverId(driverId);
+  }
+
   patchDriverById(driverId, body) {
     if (body.score) {
-      return this.findDriverById(driverId).then((driver) => {
+      return this.findDriverById(driverId).then(driver => {
         const oldNumberOfScores = driver.numberOfScores;
-        const oldtotalScore = driver.totalScore;
+        const oldtotalScore = driver.totalScore * oldNumberOfScores;
         const newScore = {
           numberOfScores: oldNumberOfScores + 1,
-          totalScore: (oldtotalScore * oldNumberOfScores + body.score) / (oldNumberOfScores + 1)
+          totalScore: oldtotalScore + body.score
         };
         return DriverRepository.patchById(driverId, newScore);
       });
     }
     if (body.isTransaction) {
-      return this.findDriverById(driverId).then((driver) => {
+      return this.findDriverById(driverId).then(driver => {
         if (body.withdrawFunds) {
           if (body.balance > driver.balance) {
             buildError(insufficientFunds);

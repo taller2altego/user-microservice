@@ -3,6 +3,14 @@ const sequelizeInstance = require('../sequelize').getSequelizeInstance();
 
 const DriverModel = require('./DriverModel');
 
+/**
+ * Function to retrive the sequelize instance.
+ * It's being kept separate for testing purposes.
+ */
+function getSequelizeInstance() {
+  return sequelizeInstance;
+}
+
 class User extends Model { }
 
 User.init({
@@ -49,6 +57,15 @@ User.init({
     defaultValue: false,
     allowNull: false
   },
+  defaultAddress: {
+    type: DataTypes.STRING
+  },
+  defaultLatitude: {
+    type: DataTypes.FLOAT
+  },
+  defaultLongitude: {
+    type: DataTypes.FLOAT
+  },
   createdAt: {
     type: DataTypes.DATE,
     required: true,
@@ -56,18 +73,11 @@ User.init({
   },
   balance: {
     type: DataTypes.INTEGER,
-    defaultValue: 0,
+    defaultValue: 0
   }
 }, { tableName: 'Users', timestamps: false, sequelize: getSequelizeInstance() });
 
-User.hasMany(DriverModel, { as: 'isDriver' });
-
-/**
- * Function to retrive the sequelize instance.
- * It's being kept separate for testing purposes.
- */
-function getSequelizeInstance() {
-  return sequelizeInstance;
-}
+User.hasMany(DriverModel, { as: 'drivers' });
+DriverModel.hasOne(User, { as: 'user', foreignKey: 'id', sourceKey: 'userId' });
 
 module.exports = User;

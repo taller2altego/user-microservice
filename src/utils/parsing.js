@@ -3,7 +3,7 @@ const parseRoleId = res => {
   const response = { ...res, role: roles[res.roleId - 1] };
   delete response.roleId;
   return response;
-}
+};
 
 const parseRole = (req, res, next) => {
   const roles = {

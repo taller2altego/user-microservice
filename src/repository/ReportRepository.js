@@ -1,8 +1,6 @@
 const ReportModel = require('../model/ReportModel');
 
 class ReportRepository {
-  constructor() { }
-
   createReport(body) {
     return ReportModel
       .create(body)
@@ -12,7 +10,13 @@ class ReportRepository {
   findAll() {
     return ReportModel
       .findAll()
-      .then((reports) => reports.map(report => report.toJSON()))
+      .then(reports => reports.map(report => report.toJSON()));
+  }
+
+  findAllByDriverId(driverId) {
+    return ReportModel
+      .findAll({ where: { driverId } })
+      .then(reports => reports.map(report => report.toJSON()));
   }
 }
 

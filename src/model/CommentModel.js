@@ -10,9 +10,9 @@ function getSequelizeInstance() {
   return sequelizeInstance;
 }
 
-class Report extends Model { }
+class Comment extends Model { }
 
-Report.init({
+Comment.init({
   id: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
@@ -22,14 +22,14 @@ Report.init({
     type: DataTypes.INTEGER,
     allowNull: false
   },
-  driverId: {
-    type: DataTypes.INTEGER,
+  isUserComment: {
+    type: DataTypes.BOOLEAN,
     allowNull: false
   },
   description: {
     type: DataTypes.STRING,
     allowNull: false
   }
-}, { tableName: 'Reports', timestamps: false, sequelize: getSequelizeInstance() });
+}, { tableName: 'Comments', timestamps: false, sequelize: getSequelizeInstance() });
 
-module.exports = Report;
+module.exports = Comment;

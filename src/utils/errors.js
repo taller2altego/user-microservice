@@ -38,7 +38,7 @@ class BlockedAccount extends Error {
   }
 }
 
-class InsufficientFunds extends Error {
+class NotEnoughFunds extends Error {
   constructor(message = 'No posee los fondos suficientes para realizar la extraccion.', code = 400) {
     super();
     this.message = message;
@@ -46,5 +46,6 @@ class InsufficientFunds extends Error {
   }
 }
 
-
-module.exports = { UserAlreadyExists, UserNotFound, WrongPassword, UnableToMatchEmail, BlockedAccount, InsufficientFunds };
+module.exports = {
+  UserAlreadyExists, UserNotFound, WrongPassword, UnableToMatchEmail, BlockedAccount, NotEnoughFunds
+};
