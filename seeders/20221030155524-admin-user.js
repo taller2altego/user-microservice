@@ -31,6 +31,7 @@ module.exports = {
       number_of_scores: 0,
       total_score: 0,
       is_blocked: false,
+      balance: 0,
       created_at: '2020-10-10'
     };
 
@@ -44,6 +45,7 @@ module.exports = {
       number_of_scores: 0,
       total_score: 0,
       is_blocked: false,
+      balance: 0,
       created_at: '2020-10-10'
     };
 
@@ -57,6 +59,7 @@ module.exports = {
       number_of_scores: 0,
       total_score: 0,
       is_blocked: false,
+      balance: 0,
       created_at: '2020-10-10'
     };
 
@@ -70,6 +73,7 @@ module.exports = {
       number_of_scores: 0,
       total_score: 0,
       is_blocked: true,
+      balance: 0,
       created_at: '2020-10-10'
     };
 
@@ -83,6 +87,7 @@ module.exports = {
       number_of_scores: 0,
       total_score: 0,
       is_blocked: false,
+      balance: 0,
       created_at: '2020-10-10'
     };
 
@@ -94,7 +99,8 @@ module.exports = {
       model: 'das', 
       license_plate: 'dsa', 
       number_of_scores: 0,
-      total_score: 0
+      total_score: 0,
+      balance: 0
     };
     await queryInterface.bulkInsert('Drivers', [isDriver]);
 

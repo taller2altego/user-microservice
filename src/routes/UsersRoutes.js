@@ -11,7 +11,6 @@ const driverController = require('../controller/driver/DriverController');
 // utils
 const { parseRole } = require('../utils/parsing');
 const restrictToAdmin = require('../utils/restrictToAdmin');
-const requestValidator = require('../utils/requestValidator');
 const logger = require('../../winston');
 
 module.exports = app => {
@@ -43,6 +42,4 @@ module.exports = app => {
   router.patch('/', logInput, user.patchUserByEmail, handlerResponse);
   router.patch('/:id/location', logInput, user.patchDefaultLocationByUserId, handlerResponse);
   router.patch('/:id', logInput, user.patchUserById, handlerResponse);
-
-  router.delete('/:id', logInput, requestValidator('id'), user.removeUserById, handlerResponse);
 };
