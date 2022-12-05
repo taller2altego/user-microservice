@@ -12,7 +12,7 @@ CREATE TABLE "Users"(
     default_address VARCHAR(500),
     default_latitude float(53),
     default_longitude float(53),
-    balance FLOAT NOT NULL
+    balance FLOAT NOT NULL,
     created_at date NOT NULL
 );
 

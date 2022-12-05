@@ -33,6 +33,7 @@ class DriverRepository {
       .findOne(params)
       .then(driver => (driver ? driver.toJSON() : null))
       .then(driver => {
+        console.log(driver);
         const scores = driver.numberOfScores;
         const sumatory = driver.totalScore;
         const totalScore = scores !== 0 ? sumatory / scores : 0;
@@ -41,6 +42,10 @@ class DriverRepository {
           totalScore,
           user: { name: driver.user.name, lastname: driver.user.lastname }
         };
+      })
+      .catch(err => {
+        console.log(err);
+        throw err;
       });
   }
 
