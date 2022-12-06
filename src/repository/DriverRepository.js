@@ -23,9 +23,7 @@ class DriverRepository {
 
   findById(driverId) {
     const params = {
-      include: [
-        { model: UserModel, as: 'user', required: false }
-      ],
+      include: [{ model: UserModel, as: 'user', required: false }],
       where: { id: driverId }
     };
 
@@ -33,7 +31,9 @@ class DriverRepository {
       .findOne(params)
       .then(driver => (driver ? driver.toJSON() : null))
       .then(driver => {
-        console.log(driver);
+        if (driver === null) {
+          return null;
+        }
         const scores = driver.numberOfScores;
         const sumatory = driver.totalScore;
         const totalScore = scores !== 0 ? sumatory / scores : 0;
@@ -42,10 +42,6 @@ class DriverRepository {
           totalScore,
           user: { name: driver.user.name, lastname: driver.user.lastname }
         };
-      })
-      .catch(err => {
-        console.log(err);
-        throw err;
       });
   }
 
@@ -53,11 +49,6 @@ class DriverRepository {
     return DriverModel
       .update(body, { where: { id: driverId } })
       .then(() => body);
-  }
-
-  removeById(driverId) {
-    return DriverModel
-      .destroy({ where: { id: driverId } });
   }
 }
 

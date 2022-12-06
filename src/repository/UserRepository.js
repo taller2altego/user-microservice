@@ -11,25 +11,19 @@ class UserRepository {
   }
 
   findAll({ email }) {
+    const reportsInclude = [{
+      model: ReportModel, as: 'reports', required: false, attributes: []
+    }];
+    const driverInclude = [{
+      model: DriverModel, as: 'drivers', required: false, include: reportsInclude
+    }];
+    const order = [[Sequelize.col('User.id'), 'ASC']];
+    const includedAttributes = [[Sequelize.fn('COUNT', Sequelize.col('drivers.reports.id')), 'reportsCount']];
+
     const params = {
-      attributes: {
-        include: [[Sequelize.fn('COUNT', Sequelize.col('drivers.reports.id')), 'reportsCount']]
-      },
-      order: [
-        [Sequelize.col('User.id'), 'ASC']
-      ],
-      include: [
-        {
-          model: DriverModel,
-          as: 'drivers',
-          required: false,
-          include: [
-            {
-              model: ReportModel, as: 'reports', required: false, attributes: []
-            }
-          ]
-        }
-      ],
+      attributes: { include: includedAttributes },
+      order,
+      include: driverInclude,
       group: [Sequelize.col('User.id'), Sequelize.col('drivers.id')]
     };
 
@@ -48,29 +42,21 @@ class UserRepository {
           ...data,
           totalScore
         };
-      }))
-      .catch(err => {
-        throw err;
-      });
+      }));
   }
 
   findById(id) {
+    const reportInclude = [{
+      model: ReportModel, as: 'reports', required: false, attributes: []
+    }];
+    const driverInclude = [{
+      model: DriverModel, as: 'drivers', required: false, include: reportInclude
+    }];
+    const includedAttributes = { include: [[Sequelize.fn('COUNT', Sequelize.col('drivers.reports.id')), 'reportsCount']] };
+
     const params = {
-      attributes: {
-        include: [[Sequelize.fn('COUNT', Sequelize.col('drivers.reports.id')), 'reportsCount']]
-      },
-      include: [
-        {
-          model: DriverModel,
-          as: 'drivers',
-          required: false,
-          include: [
-            {
-              model: ReportModel, as: 'reports', required: false, attributes: []
-            }
-          ]
-        }
-      ],
+      attributes: includedAttributes,
+      include: driverInclude,
       group: [Sequelize.col('User.id'), Sequelize.col('drivers.id')]
     };
 
@@ -111,14 +97,6 @@ class UserRepository {
 
   patchByEmail(email, body) {
     return UserModel.update(body, { where: { email } });
-  }
-
-  patchDefaultLocationByUserId(id, body) {
-    return UserModel.update(body, { where: { id } });
-  }
-
-  removeById(id) {
-    return UserModel.destroy({ where: { id } });
   }
 }
 

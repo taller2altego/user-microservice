@@ -42,16 +42,18 @@ class DriverService {
 
   patchDriverById(driverId, body) {
     if (body.score) {
-      return this.findDriverById(driverId).then(driver => {
-        const oldNumberOfScores = driver.numberOfScores;
-        const oldtotalScore = driver.totalScore * oldNumberOfScores;
-        const newScore = {
-          numberOfScores: oldNumberOfScores + 1,
-          totalScore: oldtotalScore + body.score
-        };
-        return DriverRepository.patchById(driverId, newScore);
-      });
+      return this.findDriverById(driverId)
+        .then(driver => {
+          const oldNumberOfScores = driver.numberOfScores;
+          const oldtotalScore = driver.totalScore * oldNumberOfScores;
+          const newScore = {
+            numberOfScores: oldNumberOfScores + 1,
+            totalScore: oldtotalScore + body.score
+          };
+          return DriverRepository.patchById(driverId, newScore);
+        });
     }
+
     if (body.isTransaction) {
       return this.findDriverById(driverId).then(driver => {
         if (body.withdrawFunds) {
@@ -64,10 +66,6 @@ class DriverService {
       });
     }
     return this.findDriverById(driverId).then(() => DriverRepository.patchById(driverId, body));
-  }
-
-  removeDriverById(driverId) {
-    return this.findDriverById(driverId).then(() => DriverRepository.removeById(driverId));
   }
 }
 

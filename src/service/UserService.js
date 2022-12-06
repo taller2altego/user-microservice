@@ -124,7 +124,7 @@ class UserService {
   }
 
   patchDefaultLocationByUserId(userId, body) {
-    return UserRepository.patchDefaultLocationByUserId(userId, body);
+    return UserRepository.patchById(userId, body);
   }
 
   removeUserById(id, email) {
