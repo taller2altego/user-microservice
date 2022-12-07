@@ -3,7 +3,6 @@ const {
   UserAlreadyExists,
   UserNotFound,
   WrongPassword,
-  UnableToMatchEmail,
   BlockedAccount,
   NotEnoughFunds
 } = require('../utils/errors');
@@ -85,6 +84,7 @@ class UserService {
         if (user === null) {
           throw new UserNotFound();
         }
+        return undefined;
       })
       .catch(() => {
         throw new UserNotFound();
@@ -125,16 +125,6 @@ class UserService {
 
   patchDefaultLocationByUserId(userId, body) {
     return UserRepository.patchById(userId, body);
-  }
-
-  removeUserById(id, email) {
-    return this.findUserById(id)
-      .then(user => {
-        if (email === user.email) {
-          return UserRepository.removeById(id);
-        }
-        throw new UnableToMatchEmail();
-      });
   }
 
   changePasswordByEmail(email, newPassword) {
