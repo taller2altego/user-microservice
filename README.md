@@ -1,4 +1,5 @@
 # User Microservice Fiuber
+[![codecov](https://codecov.io/github/taller2altego/user-microservice/branch/main/graph/badge.svg?token=KT7TLUJ24V)](https://codecov.io/github/taller2altego/user-microservice)
 
 ## Dependencias
 
