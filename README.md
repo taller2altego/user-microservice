@@ -53,3 +53,4 @@ Y para ver los ultimos logs:
 
 ## Base de datos: PostgreSQL
 
+La base de datos usada es [PostgreSQL](https://www.postgresql.org/).
