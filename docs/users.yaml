@@ -1,4 +1,37 @@
 paths:
+  /users/changePassword:
+    post:
+      tags:
+        - users
+      summary: Cambio de password
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              propierties:
+                email:
+                  type: string
+                  format: email
+                newPassword:
+                  type: string
+      responses:
+        204:
+          description: se envio el email para el cambio de password
+        404:
+          description: el usuario a ser consultado no existe
+          content:
+            "application/json":
+              schema:
+                $ref: "#/definitions/errors/userNotFound"
+        500:
+          description: error no identificado
+          content:
+            "application/json":
+              schema:
+                $ref: "#/definitions/errors/unexpected"
+
   /users/:
     post:
       tags:
@@ -9,7 +42,21 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/definitions/postBody"
+              type: object
+              properties:
+                name:
+                  type: string
+                lastname:
+                  type: string
+                phoneNumber:
+                  type: integer
+                email:
+                  type: string
+                  format: email
+                password:
+                  type: string
+                role:
+                  type: string
       responses:
         200:
           description: devuelve toda la información del user creado menos la password
@@ -145,6 +192,47 @@ paths:
       responses:
         204:
           description: eliminación exitosa
+        404:
+          description: el usuario a ser consultado no existe
+          content:
+            "application/json":
+              schema:
+                $ref: "#/definitions/errors/userNotFound"
+        500:
+          description: error no identificado
+          content:
+            "application/json":
+              schema:
+                $ref: "#/definitions/errors/unexpected"
+  /users/{userId}/location:
+    patch:
+      tags:
+        - users
+      summary: Setea location default
+      parameters:
+        - in: path
+          name: userId
+          schema:
+            type: integer
+          required: true
+          minimum: 1
+          description: Es el ID asociado al usuario
+      requestBody:
+        required: true
+        content:
+          "application/json":
+            schema:
+              type: object
+              properties:
+                defaultAddress:
+                  type: integer
+      responses:
+        200:
+          description: Edición exitosa de locacion
+          content:
+            "application/json":
+              schema:
+                type: object
         404:
           description: el usuario a ser consultado no existe
           content:
@@ -345,6 +433,137 @@ paths:
             "application/json":
               schema:
                 $ref: "#/definitions/errors/unexpected"
+
+  /drivers/{driverId}:
+    delete:
+      tags:
+        - driver
+      summary: Elimina un conductor
+      parameters:
+        - in: path
+          name: driverId
+          schema:
+            type: integer
+          required: true
+          minimum: 1
+          description: Es el ID asociado al conductor
+      responses:
+        204:
+          description: eliminación exitosa
+        404:
+          description: el conductor a ser consultado no existe
+          content:
+            "application/json":
+              schema:
+                $ref: "#/definitions/errors/userNotFound"
+        500:
+          description: error no identificado
+          content:
+            "application/json":
+              schema:
+                $ref: "#/definitions/errors/unexpected"
+    get:
+      tags:
+        - driver
+      summary: Consulta de todos los conductores asociados a un usuario
+      parameters:
+        - in: path
+          name: driverId
+          schema:
+            type: integer
+          required: true
+          minimum: 1
+          description: Es el ID asociado al conductor
+      responses:
+        200:
+          description: devuelve toda la información del conductor asociado a un usuario
+          content:
+            "application/json":
+              schema:
+                $ref: "#/definitions/driver"
+        404:
+          description: el driver a ser consultado no existe
+          content:
+            "application/json":
+              schema:
+                $ref: "#/definitions/errors/userNotFound"
+        500:
+          description: error no identificado
+          content:
+            "application/json":
+              schema:
+                $ref: "#/definitions/errors/unexpected"
+    patch:
+      tags:
+        - driver
+      summary: Actualiza un conductor
+      parameters:
+        - in: path
+          name: driverId
+          schema:
+            type: integer
+          required: true
+          minimum: 1
+          description: Es el ID asociado al conductor
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/definitions/driverPostBody"
+      responses:
+        200:
+          description: edición exitosa
+          content:
+            "application/json":
+              schema:
+                type: object
+        404:
+          description: el conductor a ser consultado no existe
+          content:
+            "application/json":
+              schema:
+                $ref: "#/definitions/errors/userNotFound"
+        500:
+          description: error no identificado
+          content:
+            "application/json":
+              schema:
+                $ref: "#/definitions/errors/unexpected"
+  /drivers/{driverId}/reports:
+    get:
+      tags:
+        - driver
+      summary: Obtiene todos los reportes asociados al driverId
+      parameters:
+        - in: path
+          name: driverId
+          schema:
+            type: integer
+          required: true
+          minimum: 1
+          description: Es el ID asociado al conductor
+      responses:
+        200:
+          description: Una lista de objetos con el detalle de los reportes asociados al driverId
+          content:
+            "application/json":
+              schema:
+                type: array
+                items:
+                  $ref: "#/definitions/reports"
+        404:
+          description: no se encontro ningun reporte
+          content:
+            "application/json":
+              schema:
+                $ref: "#/definitions/errors/reportNotFound"
+        500:
+          description: error no identificado
+          content:
+            "application/json":
+              schema:
+                $ref: "#/definitions/errors/unexpected"
 definitions:
   postBody:
     type: object
@@ -398,8 +617,24 @@ definitions:
         type: string
       licensePlate:
         type: string
+  reports:
+    type: object
+    properties:
+      id:
+        type: integer
+      userId:
+        type: integer
+      driverId:
+        type: integer
+      description:
+        type: string
   errors:
     userNotFound:
+      type: object
+      properties:
+        message:
+          type: string
+    reportNotFound:
       type: object
       properties:
         message:
