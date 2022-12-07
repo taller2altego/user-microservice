@@ -12,15 +12,8 @@ const myFormat = printf(({ level, message, timestamp, ...metadata }) => {
   return msg
 });
 
-const logger = createLogger({
-  level: 'debug',
-  format: combine(
-    format.colorize(),
-    splat(),
-    timestamp(),
-    myFormat
-  ),
-  transports: [ new transports.Console({ level: 'info' })]
-});
+const level = process.env.NODE_ENV === 'production' ? 'error' : 'debug';
+const ownFormat = combine(format.colorize(), splat(), timestamp(), myFormat);
+const logger = createLogger({ level, format: ownFormat, transports: [new transports.Console({ level })] });
 
 module.exports = logger;
