@@ -42,9 +42,9 @@ module.exports = app => {
   router.post('/oauth', logInput, oauthValidate, parseRole, user.signUp, handlerResponse);
 
   router.post('/', logInput, restrictToAdmin('isSuperadmin'), validateUser, parseRole, user.signUp, handlerResponse);
-  router.post('/:userId/driver', validateDriver, driverController.associateDriverToUser, handlerResponse);
-  router.post('/verifyUserByEmail', user.verifyUserByEmail, handlerResponse);
-  router.post('/changePassword', user.changePasswordByEmail, handlerResponse);
+  router.post('/:userId/driver', logInput, validateDriver, driverController.associateDriverToUser, handlerResponse);
+  router.post('/verifyUserByEmail', logInput, user.verifyUserByEmail, handlerResponse);
+  router.post('/changePassword', logInput, user.changePasswordByEmail, handlerResponse);
 
   router.get('/login', logInput, user.login, handlerResponse);
   router.get('/', logInput, restrictToAdmin('isAdmin'), user.findAllUsers, handlerResponse);
