@@ -26,6 +26,7 @@
   },
   "homepage": "https://github.com/taller2altego/user-microservice#readme",
   "dependencies": {
+    "ajv": "^8.11.2",
     "body-parser": "^1.20.0",
     "config": "^3.3.8",
     "cors": "^2.8.5",
@@ -39,15 +40,15 @@
     "winston": "^3.8.2"
   },
   "devDependencies": {
-    "sinon": "^14.0.0",
-    "rewire": "^6.0.0",
-    "mocha": "^10.0.0",
     "chai": "^4.3.6",
     "chai-as-promised": "^7.1.1",
     "eslint": "^8.28.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.26.0",
     "husky": "^8.0.2",
-    "nyc": "^15.1.0"
+    "mocha": "^10.0.0",
+    "nyc": "^15.1.0",
+    "rewire": "^6.0.0",
+    "sinon": "^14.0.0"
   }
 }
