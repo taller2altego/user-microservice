@@ -2,7 +2,7 @@
 const router = require('express').Router();
 
 // controllers
-const validateComment = require('../controller/comments/CommentValidate');
+// const validateComment = require('../controller/comments/CommentValidate');
 const CommentController = require('../controller/comments/CommentController');
 
 // utils
@@ -34,6 +34,6 @@ module.exports = app => {
   app.use('/comments', router);
   router.get('/user/:userId', logInput, CommentController.getUserCommentsById, handlerResponse);
   router.get('/driver/:userId', logInput, CommentController.getDriverCommentsById, handlerResponse);
-  router.post('/user', logInput, validateComment, CommentController.createUserComment, handlerResponse);
-  router.post('/driver', logInput, validateComment, CommentController.createDriverComment, handlerResponse);
+  router.post('/user', logInput, CommentController.createUserComment, handlerResponse);
+  router.post('/driver', logInput, CommentController.createDriverComment, handlerResponse);
 };

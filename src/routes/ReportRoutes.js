@@ -2,7 +2,7 @@
 const router = require('express').Router();
 
 // controllers
-const validateReport = require('../controller/reports/ReportValidate');
+// const validateReport = require('../controller/reports/ReportValidate');
 const reportController = require('../controller/reports/ReportController');
 
 // utils
@@ -31,5 +31,5 @@ module.exports = app => {
   };
 
   app.use('/reports', router);
-  router.post('/', logInput, validateReport, reportController.createReport, handlerResponse);
+  router.post('/', logInput, reportController.createReport, handlerResponse);
 };

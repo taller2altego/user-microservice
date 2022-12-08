@@ -2,9 +2,9 @@
 const router = require('express').Router();
 
 // controllers
-const validateUser = require('../controller/users/UserValidate');
-const oauthValidate = require('../controller/users/OauthValidate');
-const validateDriver = require('../controller/driver/DriverValidate');
+// const validateUser = require('../controller/users/UserValidate');
+// const oauthValidate = require('../controller/users/OauthValidate');
+// const validateDriver = require('../controller/driver/DriverValidate');
 const user = require('../controller/users/UserController');
 const driverController = require('../controller/driver/DriverController');
 
@@ -39,10 +39,10 @@ module.exports = app => {
   app.use('/users', router);
 
   router.get('/login/oauth', logInput, user.oauthLogin, handlerResponse);
-  router.post('/oauth', logInput, oauthValidate, parseRole, user.signUp, handlerResponse);
+  router.post('/oauth', logInput, parseRole, user.signUp, handlerResponse);
 
-  router.post('/', logInput, restrictToAdmin('isSuperadmin'), validateUser, parseRole, user.signUp, handlerResponse);
-  router.post('/:userId/driver', logInput, validateDriver, driverController.associateDriverToUser, handlerResponse);
+  router.post('/', logInput, restrictToAdmin('isSuperadmin'), parseRole, user.signUp, handlerResponse);
+  router.post('/:userId/driver', logInput, driverController.associateDriverToUser, handlerResponse);
   router.post('/verifyUserByEmail', logInput, user.verifyUserByEmail, handlerResponse);
   router.post('/changePassword', logInput, user.changePasswordByEmail, handlerResponse);
 
