@@ -12,26 +12,17 @@ const schema = {
     license: {
       type: 'string',
       minLength: 1,
-      maxLength: 50,
-      errorMessage: {
-        type: 'license must be a string'
-      },
+      maxLength: 50
     },
     model: {
       type: 'string',
       minLength: 1,
-      maxLength: 50,
-      errorMessage: {
-        type: 'model must be a string'
-      },
+      maxLength: 50
     },
     licensePlate: {
       type: 'string',
       minLength: 1,
-      maxLength: 50,
-      errorMessage: {
-        type: 'licensePlate must be a string'
-      },
+      maxLength: 50
     }
   },
   additionalProperties: false

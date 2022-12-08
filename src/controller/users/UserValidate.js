@@ -15,40 +15,25 @@ const schema = {
     name: {
       type: 'string',
       minLength: 1,
-      maxLength: 50,
-      errorMessage: {
-        type: 'name must be a string'
-      },
+      maxLength: 50
     },
     lastname: {
       type: 'string',
       minLength: 1,
-      maxLength: 50,
-      errorMessage: {
-        type: 'lastname must be a string'
-      },
+      maxLength: 50
     },
     phoneNumber: {
       type: 'number',
-      minimum: 0,
-      errorMessage: {
-        type: 'phoneNumber must be a phone number'
-      },
+      minimum: 0
     },
     email: {
       type: 'string',
-      format: 'email',
-      errorMessage: {
-        type: 'email must have an email format'
-      },
+      format: 'email'
     },
     password: {
       type: 'string',
       minLength: 1,
-      maxLength: 50,
-      errorMessage: {
-        type: 'password must be a string'
-      },
+      maxLength: 50
     },
     role: {
       enum: ['admin', 'user', 'driver']

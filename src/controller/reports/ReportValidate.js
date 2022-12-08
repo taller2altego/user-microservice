@@ -8,24 +8,15 @@ const schema = {
   ],
   properties: {
     userId: {
-      type: 'integer',
-      errorMessage: {
-        type: 'user id must be an integer'
-      }
+      type: 'integer'
     },
     driverId: {
-      type: 'integer',
-      errorMessage: {
-        type: 'driver id must be an integer'
-      }
+      type: 'integer'
     },
     description: {
       type: 'string',
       minLength: 1,
-      maxLength: 500,
-      errorMessage: {
-        type: 'model must be a string with max length of 500 characters'
-      },
+      maxLength: 500
     },
   },
   additionalProperties: false

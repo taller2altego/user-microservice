@@ -14,25 +14,16 @@ const schema = {
     name: {
       type: 'string',
       minLength: 1,
-      maxLength: 50,
-      errorMessage: {
-        type: 'name must be a string'
-      },
+      maxLength: 50
     },
     lastname: {
       type: 'string',
       minLength: 1,
-      maxLength: 50,
-      errorMessage: {
-        type: 'lastname must be a string'
-      },
+      maxLength: 50
     },
     email: {
       type: 'string',
-      format: 'email',
-      errorMessage: {
-        type: 'email must have an email format'
-      },
+      format: 'email'
     },
     role: {
       enum: ['admin', 'user', 'driver']
