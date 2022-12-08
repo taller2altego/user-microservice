@@ -8,6 +8,7 @@ class UserRepository {
     return UserModel
       .create({ ...body, isBlocked: false })
       .then(user => user.toJSON());
+
   }
 
   findAll({ email }) {
